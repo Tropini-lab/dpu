@@ -257,6 +257,7 @@ class EvolverNamespace(BaseNamespace):
         command = {'param': 'pump', 'value': MESSAGE,
                    'recurring': False ,'immediate': True}
         self.emit('command', command, namespace='/dpu-evolver')
+        print("Fluid command sent: ", command)
 
     def update_chemo(self, data, vials, bolus_in_s, period_config, immediate = False):
         current_pump = data['config']['pump']['value']
@@ -285,6 +286,7 @@ class EvolverNamespace(BaseNamespace):
         if MESSAGE['value'] != current_pump:
             logger.info('updating chemostat: %s' % MESSAGE)
             self.emit('command', MESSAGE, namespace = '/dpu-evolver')
+            print("CHEMOSTAT MESSAGE SENT: ", MESSAGE)
 
     def stop_all_pumps(self, ):
         data = {'param': 'pump',
@@ -537,6 +539,8 @@ class EvolverNamespace(BaseNamespace):
             custom_script.turbidostat(self, data, vials, elapsed_time)
         elif OPERATION_MODE == 'chemostat':
             custom_script.chemostat(self, data, vials, elapsed_time)
+        elif OPERATION_MODE == 'eric_chemostat':
+            custom_script.eric_chemostat(self,data,vials,elapsed_time)
         else:
             # try to load the user function
             # if failing report to user
