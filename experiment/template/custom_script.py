@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 ##### USER DEFINED GENERAL SETTINGS #####
 
 #set new name for each experiment, otherwise files will be overwritten
-EXP_NAME = 'Feb_19_real_eric2_expt'
+EXP_NAME = 'Feb_25_Turb_expt'
 EVOLVER_IP = '10.0.0.100'
 EVOLVER_PORT = 8081
 
@@ -27,7 +27,7 @@ STIR_INITIAL = [10] * 16 #try 8,10,12 etc; makes 16-value list
 
 VOLUME =  26 #mL, determined by vial cap straw length
 PUMP_CAL_FILE = 'pump_cal.txt' #tab delimited, mL/s with 16 influx pumps on first row, etc.
-OPERATION_MODE = 'eric_chemostat' #use to choose between 'turbidostat' , 'chemostat' and 'eric_chemostat' functions
+OPERATION_MODE = 'turbidostat' #use to choose between 'turbidostat' , 'chemostat' and 'eric_chemostat' functions
 # if using a different mode, name your function as the OPERATION_MODE variable
 
 ##### END OF USER DEFINED GENERAL SETTINGS #####
@@ -37,12 +37,12 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
     ##### USER DEFINED VARIABLES #####
 
-    turbidostat_vials = vials #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
+    turbidostat_vials = [4] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
     stop_after_n_curves = np.inf #set to np.inf to never stop, or integer value to stop diluting after certain number of growth curves
-    OD_values_to_average = 3  # Number of values to calculate the OD average
+    OD_values_to_average = 6  # Number of values to calculate the OD average
 
-    lower_thresh = [0.22] * len(vials) #to set all vials to the same value, creates 16-value list
-    upper_thresh = [0.3] * len(vials) #to set all vials to the same value, creates 16-value list
+    lower_thresh = [0.2] * len(vials) #to set all vials to the same value, creates 16-value list
+    upper_thresh = [0.4] * len(vials) #to set all vials to the same value, creates 16-value list
 
     #Alternatively, use 16 value list to set different thresholds, use 9999 for vials not being used
     #lower_thresh = [0.2, 0.2, 0.3, 0.3, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999]
@@ -112,10 +112,9 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 text_file.close()
                 ODset = upper_thresh[x]
 
-            average_OD= .32
-            if average_OD == .32:
+
             #if need to dilute to lower threshold, then calculate amount of time to pump
-            # if average_OD > ODset and collecting_more_curves:
+            if average_OD > ODset and collecting_more_curves:
 
                 time_in = - (np.log(lower_thresh[x]/average_OD)*VOLUME)/flow_rate[x]
 
@@ -158,18 +157,20 @@ def chemostat(eVOLVER, input_data, vials, elapsed_time):
     OD_data = input_data['transformed']['od']
 
     ##### USER DEFINED VARIABLES #####
-    start_OD = -1 # ~OD600, set to 0 to start chemostat dilutions at any positive OD
+    start_OD = .2 # ~OD600, set to 0 to start chemostat dilutions at any positive OD
     start_time = 0 #hours, set 0 to start immediately
     # Note that script uses AND logic, so both start time and start OD must be surpassed
 
     OD_values_to_average = 6  # Number of values to calculate the OD average
     chemostat_vials = vials #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
 
-    rate_config = [1.1538] * 16 #to set all vials to the same value, creates 16-value list
+    # rate_config = [1.1538] * 16 #to set all vials to the same value, creates 16-value list
     #UNITS of 1/hr, NOT mL/hr, rate = flowrate/volume, so dilution rate ~ growth rate, set to 0 for unused vials
 
     #Alternatively, use 16 value list to set different rates, use 0 for vials not being used
-    #rate_config = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6]
+    #Only running vials 3,5,10,14
+    rate_config = [0.0,0.0,0.0,0.5,0.0,1.0,0.0,0.0,0.0,0.0,1.5,0.0,0.0,0.0,2.0,0.0]
+
 
     ##### END OF USER DEFINED VARIABLES #####
 
@@ -249,6 +250,14 @@ def chemostat(eVOLVER, input_data, vials, elapsed_time):
 
 # def your_function_here(): # good spot to define modular functions for dynamics or feedback
 
+
+
+
+
+def combostat(eVOLVER, input_data,vials,elapsed_time):
+    #Function that allows some vials to be in chemostat mode, and other vials to be in turbidostat mode..
+    yeet = 1
+
 def eric_chemostat(eVOLVER,input_data,vials,elapsed_time):
 
     ##USER DEFINED VARIABLES
@@ -299,7 +308,6 @@ def eric_chemostat(eVOLVER,input_data,vials,elapsed_time):
         eVOLVER.fluid_command(MESSAGE)
     else:
         print("Conditions not passed, fluid commands will not send yet...")
-
 
 
 def get_median_od(eVOLVER, x,save_path,od_values_to_median, start_od):

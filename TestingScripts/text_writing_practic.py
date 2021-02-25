@@ -1,20 +1,19 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit, leastsq
+from scipy.signal import medfilt
 import os
+from scipy.optimize import minimize
+import pandas as pd
+import pickle
+import math
+from bokeh.plotting import figure, output_file, show
+from bokeh.layouts import row
 
-#Getting filepath:
-file_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_turb3_expt\pump_log\vial0_pump_log.txt'
-data = np.genfromtxt(file_path, delimiter=',')
-print(data)
-print(len(data))
 
-# save_path = r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Practice text files'
-# EXP_NAME = 'FebLearn'
-# #Creating a new file..
-# for x in range(0,16):
-#
-#     file_name = "vial{0}_pump_log.txt".format(x)
-#     file_path = os.path.join(save_path, EXP_NAME, 'pump_log', file_name)
-#
-#     text_file = open(file_path, "a+")
-#     text_file.write("{0},{1}\n".format(.1,x))
-#     text_file.close()
+def three_dim(data, c0, c1, c2, c3, c4, c5):
+    x = data[0]
+    y = data[1]
+    z= float(c0 + c1*x + c2*y + c3*x**2 + c4*x*y + c5*y**2)
+    return z
+

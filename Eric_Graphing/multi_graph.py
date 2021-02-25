@@ -7,7 +7,8 @@ from scipy.optimize import minimize
 import pandas as pd
 import pickle
 import math
-
+from bokeh.plotting import figure, output_file, show
+from bokeh.layouts import row
 
 def sigmoid(x, a, b, c, d):
     return np.real(a + (b - a)/(1 + (10**((c-x)*d))))
@@ -132,75 +133,6 @@ def remove_offset(OD, target_baseline=30000):
     newOD = OD+ add_on
     return newOD
 
-def plot_raw_data(root_folder):
-
-    #Getting a list of the files ( OD for each vial) in the root folder:
-    files_list = []
-    for path, subdirs, files in os.walk(root_folder):
-        for name in files:
-            x = os.path.join(path, name)
-            files_list.append(x)
-
-    #Sorting the file list by file number:
-    files_list.sort(key=file_num)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-
-
-    if "135" in files_list[0]:
-        fig.suptitle("OD 135")
-        c_array = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\calibration\OD135_Calibration_params.npy',
-                          allow_pickle='TRUE').item()
-        rsq = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\calibration\OD135_R_sq.npy', allow_pickle='TRUE').item()
-    elif "90" in files_list[0]:
-        fig.suptitle("OD 90")
-        c_array = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\calibration\OD90_Calibration_params.npy',
-                          allow_pickle="TRUE").item()
-        rsq = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\calibration\OD90_R_sq.npy', allow_pickle='TRUE').item()
-
-
-    colour_array = ['black','rosybrown','maroon', 'salmon','peru','yellow','olive','lawngreen','forestgreen','aquamarine','cyan',
-                    'deepskyblue','slategrey','blue','violet','magenta']
-
-    for i,filepath in enumerate(files_list):
-        #Creating the current dataframe:
-        df = pd.read_csv(filepath)
-
-        #Changing the column names:
-        cols = list(df.columns)
-        df= df.rename(columns={cols[0]:"Time", cols[1]:"OD"})
-
-        #Plotting raw OD versus time:
-        time = np.array(df["Time"].tolist())
-        raw_od = np.array(df["OD"].tolist())
-
-        #Getting actual OD using the appropriate calibration curves:
-        a,b,c,d= c_array.get(f'Vial{i}')
-        actual_od = np.array([inv_sigmoid(x,a,b,c,d) for x in raw_od])
-        actual_od = remove_offset(actual_od,target_baseline=0) ## Zeroing all of the initial OD's
-        r_val = rsq.get(f'Vial{i}')
-
-        #Removing the offset to make all lines start at the same place
-        raw_od = remove_offset(raw_od)
-
-        ax1.plot(time, raw_od, label= f'Vial{i}', color = colour_array[i])
-
-        ax2.plot(time, actual_od, label = f'Vial{i} R sq= {r_val: .2f}', color = colour_array[i])
-
-
-
-    ax1.set_title("Raw OD vs Time")
-    ax1.set_xlabel('Time')
-    ax1.set_ylabel('Raw OD')
-    ax1.legend()
-
-    ax2.set_title("OD vs Time")
-    ax2.set_xlabel('Time')
-    ax2.set_ylabel("OD")
-    ax2.legend()
-
-    plt.show()
-
 def plot_3D_data(od_90_folder, od_135_folder, datestring):
 
     #Getting the OD 90 files:
@@ -227,12 +159,15 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     #Initializing the plot:
 
     colour_array = ['black','rosybrown','maroon', 'salmon','peru','yellow','olive','lawngreen','forestgreen','aquamarine','cyan',
-                    'deepskyblue','slategrey','blue','violet','magenta']
+                    'deepskyblue','grey','blue','violet','magenta']
     fig, (ax1, ax2) = plt.subplots(1, 2)    #Side by side plots for raw signals
     fig, ax = plt.subplots(1,1)             #Large plot of OD with 3D calibration
     fig,log_ax = plt.subplots()   #logarithmic plot
 
     vial_dict = dict()
+
+    #For bokeh plot:
+    bok_plot = figure(title="OD Versus Time", x_axis_label='Time (hours)', y_axis_label='OD')
 
     for i,(OD_135_filepath, OD_90_filepath) in enumerate(zip(od_90_files_list,od_135_files_list)):
 
@@ -248,7 +183,7 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         df_135 = df_135.rename(columns={cols_135[0]:"Time", cols_135[1]:"OD"})
 
 
-        #Converting datafram columsn into lists:
+        #Converting dataframe columsn into lists:
         time = np.array(df_90["Time"].tolist())
         raw_od_90 = np.array(df_90["OD"].tolist())
         raw_od_135 = np.array(df_135["OD"].tolist())
@@ -265,7 +200,7 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         od_offset_rem = remove_offset(od,target_baseline=0) ## Zeroing all of the initial OD's
 
         #Adding a median filter
-        # od_offset_rem = medfilt(np.array(od_offset_rem), kernel_size=17)
+        od_offset_rem = medfilt(np.array(od_offset_rem), kernel_size=17)
 
         #Removing offset on raw data ( making it all start at the same spot...
         raw_od_90_offset_rem = remove_offset(raw_od_90)
@@ -281,14 +216,20 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         ax2.grid(True)
 
         #Plotting converted od:
-        ax.plot(time, (od_offset_rem),label = f'Vial{i}', color = colour_array[i])
+        ax.plot(time, od_offset_rem,label = f'Vial{i}', color = colour_array[i])
+
+        #Plotting on bokeh plot:
+        bok_plot.line(time, od_offset_rem,
+                      line_width=2, color = colour_array[i], legend_label=f'Vial{i}')
 
         #plotting logarithmic od:
 
         # log_ax.plot(time[200:450],np.log(medfilt(od_offset_rem[200:450], kernel_size=41)), label = f'Vial{i}', color = colour_array[i])
 
 
-
+    output_file("od_plots.html")
+    r = row(children = [bok_plot], sizing_mode = 'stretch_width')
+    show(r)
 
     ax1.set_title("Raw OD 90 vs Time"+ datestring)
     ax1.set_xlabel('Time')
@@ -313,7 +254,7 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     # log_ax.legend()
 
     # Plotting forwards difference derivative.. might be a little too high res...
-    plot_derivatives(vial_dict,time,colour_array, datestring)
+    # plot_derivatives(vial_dict,time,colour_array, datestring)
 
     #Fitting an exp curve to one of the datapoints:
     timestep = np.mean (np.diff(np.array(time)))
@@ -328,7 +269,6 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
 
     #Plotting endpoint difference data:
     # compare_endpt_data(vial_dict,endpt_od)
-
     plt.show()
 
 def central_difference(array,a,h,timestep):
@@ -376,9 +316,9 @@ def plot_derivatives(vial_od_dict,time,color_legend, datestring):
         ax.plot(timespace,od_diff,color = color_legend[i], label = f'Vial{i}')
         ax.set_ylim((-1,1))
 
-    ax.set_title("Growth Rate vs Time " + datestring)
+    ax.set_title("First derivative plot" + datestring)
     ax.set_xlabel('Time')
-    ax.set_ylabel("Growth Rate")
+    ax.set_ylabel("d(OD)/dt")
     ax.legend()
 
     plt.draw()
@@ -420,8 +360,11 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
 if __name__ == '__main__':
 
 
-    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_135_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_90_raw', datestring='Feb19')
+    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_24_Turb_expt\od_135_raw',
+                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_24_Turb_expt\od_90_raw', datestring='Feb23')
+
+    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_135_raw',
+    #              od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_90_raw', datestring='Feb23')
 
     plt.show()
 
