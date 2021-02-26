@@ -10,10 +10,12 @@ import math
 from bokeh.plotting import figure, output_file, show
 from bokeh.layouts import row
 
+time_in = - (np.log(.2 / .4) * 26) / .77
 
-def three_dim(data, c0, c1, c2, c3, c4, c5):
-    x = data[0]
-    y = data[1]
-    z= float(c0 + c1*x + c2*y + c3*x**2 + c4*x*y + c5*y**2)
-    return z
+past_od = [0.40073911961661657,0.4009379252525592,0.40074687896078276,0.345506898142772,0.2421577268523809,0.24528354148863407]
+med_od = np.median(past_od)
+print("Median od for second pump", med_od)
+time_in = - (np.log(.2 / med_od) * 26) / .77
 
+print("Time in for second pump")
+print(time_in)

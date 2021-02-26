@@ -39,7 +39,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
     turbidostat_vials = [4] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
     stop_after_n_curves = np.inf #set to np.inf to never stop, or integer value to stop diluting after certain number of growth curves
-    OD_values_to_average = 6  # Number of values to calculate the OD average
+    OD_values_to_average = 5  # Number of values to calculate the OD average
 
     lower_thresh = [0.2] * len(vials) #to set all vials to the same value, creates 16-value list
     upper_thresh = [0.4] * len(vials) #to set all vials to the same value, creates 16-value list
@@ -56,7 +56,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
     #Tunable settings for overflow protection, pump scheduling etc. Unlikely to change between expts
 
     time_out = 5 #(sec) additional amount of time to run efflux pump
-    pump_wait = 1 # (min) minimum amount of time to wait between pump events
+    pump_wait = 2 # (min) minimum amount of time to wait between pump events
 
     ##### End of Turbidostat Settings #####
 
@@ -92,6 +92,8 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
         if data.size != 0:
             # Take median to avoid outlier
             od_values_from_file = data[:,1]
+            print("The od values from a file", od_values_from_file)
+
             average_OD = float(np.median(od_values_from_file))
 
 
@@ -114,12 +116,17 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
 
             #if need to dilute to lower threshold, then calculate amount of time to pump
-            if average_OD > ODset and collecting_more_curves:
+
+            # if average_OD > ODset and collecting_more_curves: # Eric changing this line, because we don't want double pumps for a single diltuion, which can result in over diluting or ugly curves.
+            if average_OD > upper_thresh[x]:
+                print("Average OD ",average_OD, " past threshold ", upper_thresh[x])
 
                 time_in = - (np.log(lower_thresh[x]/average_OD)*VOLUME)/flow_rate[x]
 
-                if time_in > 20:
-                    time_in = 20
+                #TODO: Can influx pumps run longer than 20 seconds? Test this.
+
+                if time_in > 35:  #Eric changed this threshold from 20 to 35 seconds.. This way pumping events don't have to be split up.
+                    time_in = 35
 
                 time_in = round(time_in, 2)
 
@@ -128,7 +135,9 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                                          'pump_log', file_name)
                 data = np.genfromtxt(file_path, delimiter=',')
                 last_pump = data[len(data)-1][0]
-                if ((elapsed_time - last_pump)*60) >= pump_wait: # if sufficient time since last pump, send command to Arduino
+
+                if ((elapsed_time - last_pump)*60) >= pump_wait: # if sufficient time since last pump, send command to Arduino. Eric upped this from 60s
+                    print("Time since last pump = ", (elapsed_time-last_pump)*60, "triggering dilution" )
                     logger.info('turbidostat dilution for vial %d' % x)
                     # influx pump
                     MESSAGE[x] = str(time_in)

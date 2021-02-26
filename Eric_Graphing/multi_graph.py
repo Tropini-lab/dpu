@@ -360,8 +360,8 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
 if __name__ == '__main__':
 
 
-    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_24_Turb_expt\od_135_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_24_Turb_expt\od_90_raw', datestring='Feb23')
+    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_25_Turb_expt\od_135_raw',
+                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_25_Turb_expt\od_90_raw', datestring='Feb23')
 
     # plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_135_raw',
     #              od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_90_raw', datestring='Feb23')
