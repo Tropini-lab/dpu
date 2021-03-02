@@ -1,0 +1,28 @@
+2021-02-22 13:40:43 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.64)
+2021-02-22 13:40:43 - eVOLVER - [INFO] - updating chemostat: {'fields_expected_incoming': 49, 'fields_expected_outgoing': 49, 'recurring': True, 'immediate': True, 'value': ['0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--'], 'param': 'pump'}
+2021-02-22 13:41:00 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.55)
+2021-02-22 13:41:20 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.38)
+2021-02-22 13:41:40 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.36)
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 0, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 1, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 2, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 3, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 4, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 5, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 6, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 7, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 8, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 9, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 10, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 11, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 12, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 13, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 14, period 60.00
+2021-02-22 13:42:21 - custom_script - [INFO] - chemostat initiated for vial 15, period 60.00
+2021-02-22 13:42:21 - eVOLVER - [INFO] - updating chemostat: {'fields_expected_incoming': 49, 'fields_expected_outgoing': 49, 'recurring': True, 'immediate': True, 'value': ['0.64|60', '0.65|60', '0.66|60', '0.66|60', '0.64|60', '0.62|60', '0.64|60', '0.65|60', '0.65|60', '0.67|60', '0.66|60', '0.62|60', '0.65|60', '0.64|60', '0.64|60', '0.67|60', '1.28|60', '1.30|60', '1.32|60', '1.32|60', '1.29|60', '1.23|60', '1.27|60', '1.31|60', '1.30|60', '1.33|60', '1.32|60', '1.25|60', '1.29|60', '1.28|60', '1.27|60', '1.33|60', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--'], 'param': 'pump'}
+2021-02-22 13:43:36 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-22 13:43:36 - eVOLVER - [INFO] - stopping all pumps
+2021-02-22 13:43:38 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-22 13:43:38 - eVOLVER - [INFO] - stopping all pumps
+2021-02-22 13:43:38 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-22 13:43:38 - eVOLVER - [INFO] - stopping all pumps

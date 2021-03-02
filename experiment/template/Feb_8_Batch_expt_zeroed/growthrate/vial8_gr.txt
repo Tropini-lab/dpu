@@ -1,0 +1,3 @@
+Experiment: Feb_8_Batch_expt_zeroed vial 8, Mon Feb  8 17:45:07 2021
+0,0
+2.7103,2.6240805431176595

@@ -1,0 +1,7 @@
+2021-02-18 15:24:45 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-18 15:34:10 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-18 15:34:10 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 15:34:12 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-18 15:34:12 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 15:34:12 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-18 15:34:12 - eVOLVER - [INFO] - stopping all pumps

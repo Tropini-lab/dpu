@@ -1,0 +1,39 @@
+2021-02-18 11:54:24 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 0
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 1
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 2
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 3
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 4
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 5
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 6
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 7
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 8
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 9
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 10
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 11
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 12
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 13
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 14
+2021-02-18 11:55:24 - custom_script - [INFO] - turbidostat dilution for vial 15
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 0
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 1
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 2
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 3
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 4
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 5
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 6
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 7
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 8
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 9
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 10
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 11
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 12
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 13
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 14
+2021-02-18 11:56:24 - custom_script - [INFO] - turbidostat dilution for vial 15
+2021-02-18 11:56:54 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-18 11:56:54 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 11:56:56 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-18 11:56:56 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 11:56:56 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-18 11:56:56 - eVOLVER - [INFO] - stopping all pumps

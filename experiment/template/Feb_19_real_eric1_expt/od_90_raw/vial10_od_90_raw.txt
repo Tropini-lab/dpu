@@ -1,0 +1,4 @@
+Experiment: Feb_19_real_eric1_expt vial 10, Fri Feb 19 13:41:06 2021
+0.0044,28706
+0.0098,28657
+0.0154,28654

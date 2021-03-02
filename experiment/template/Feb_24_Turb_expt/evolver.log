@@ -1,0 +1,90 @@
+2021-02-24 18:13:42 - eVOLVER - [INFO] - updating temperatures (max. deltaT is 0.24)
+2021-02-24 18:13:42 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-24 18:14:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 4.35)
+2021-02-24 18:14:20 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 4.21)
+2021-02-24 18:14:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 4.01)
+2021-02-24 18:15:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 3.87)
+2021-02-24 18:15:20 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 3.82)
+2021-02-24 18:15:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 3.62)
+2021-02-24 18:16:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 3.54)
+2021-02-24 18:16:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 3.43)
+2021-02-24 18:16:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 3.26)
+2021-02-24 18:17:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 3.09)
+2021-02-24 18:17:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.98)
+2021-02-24 18:17:40 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.78)
+2021-02-24 18:18:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.73)
+2021-02-24 18:18:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.62)
+2021-02-24 18:18:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.42)
+2021-02-24 18:19:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.37)
+2021-02-24 18:19:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.23)
+2021-02-24 18:19:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.11)
+2021-02-24 18:20:00 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.06)
+2021-02-24 18:20:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.92)
+2021-02-24 18:20:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.81)
+2021-02-24 18:21:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.72)
+2021-02-24 18:21:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.61)
+2021-02-24 18:21:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.53)
+2021-02-24 18:22:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.36)
+2021-02-24 18:22:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.28)
+2021-02-24 18:22:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.11)
+2021-02-24 18:23:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.97)
+2021-02-24 18:23:20 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.89)
+2021-02-24 18:23:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.78)
+2021-02-24 18:24:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.72)
+2021-02-24 18:24:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.64)
+2021-02-24 18:24:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.55)
+2021-02-24 18:25:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.44)
+2021-02-24 18:25:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.33)
+2021-02-24 18:25:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.25)
+2021-02-24 19:13:41 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-24 19:13:41 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-24 19:22:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-24 19:52:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-24 20:03:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.28)
+2021-02-24 20:13:41 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-24 20:13:41 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-24 21:13:42 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-24 21:13:42 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-24 21:16:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-24 21:25:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-24 22:13:42 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-24 22:13:42 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-24 22:33:40 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.35)
+2021-02-24 23:13:43 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-24 23:13:43 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 00:13:44 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 00:13:44 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 00:46:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-25 01:13:44 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 01:13:44 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 01:45:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-25 01:50:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.26)
+2021-02-25 02:13:45 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 02:13:45 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 03:13:45 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 03:13:45 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 04:06:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.21)
+2021-02-25 04:13:46 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 04:13:46 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 05:13:47 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 05:13:47 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 05:36:21 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-25 05:38:00 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-25 06:08:00 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.23)
+2021-02-25 06:13:47 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 06:13:47 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 07:13:48 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 07:13:48 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 07:17:01 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-25 08:13:48 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 08:13:48 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 08:20:41 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.25)
+2021-02-25 09:13:49 - eVOLVER - [INFO] - resetting connection to eVOLVER to avoid potential buildup of broadcast messages
+2021-02-25 09:13:49 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-25 09:57:20 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-25 10:06:56 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-25 10:06:56 - eVOLVER - [INFO] - stopping all pumps
+2021-02-25 10:06:58 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-25 10:06:58 - eVOLVER - [INFO] - stopping all pumps
+2021-02-25 10:06:58 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-25 10:06:58 - eVOLVER - [INFO] - stopping all pumps

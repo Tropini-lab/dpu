@@ -1,0 +1,2 @@
+Experiment: Feb_19_eric2_chem_expt vial 12, Thu Feb 18 14:57:39 2021
+0.0019,1613

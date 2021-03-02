@@ -1,0 +1,6 @@
+2021-02-18 14:53:39 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-18 14:53:39 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-18 14:53:39 - eVOLVER - [CRITICAL] - exception only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices stopped the experiment
+2021-02-18 14:53:39 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 14:53:39 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-18 14:53:39 - eVOLVER - [INFO] - stopping all pumps

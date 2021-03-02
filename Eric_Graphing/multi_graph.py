@@ -8,7 +8,7 @@ import pandas as pd
 import pickle
 import math
 from bokeh.plotting import figure, output_file, show
-from bokeh.layouts import row
+# from bokeh.layouts import row
 
 def sigmoid(x, a, b, c, d):
     return np.real(a + (b - a)/(1 + (10**((c-x)*d))))
@@ -167,7 +167,7 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     vial_dict = dict()
 
     #For bokeh plot:
-    bok_plot = figure(title="OD Versus Time", x_axis_label='Time (hours)', y_axis_label='OD')
+    # bok_plot = figure(title="OD Versus Time", x_axis_label='Time (hours)', y_axis_label='OD')
 
     for i,(OD_135_filepath, OD_90_filepath) in enumerate(zip(od_90_files_list,od_135_files_list)):
 
@@ -216,11 +216,13 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         ax2.grid(True)
 
         #Plotting converted od:
-        ax.plot(time, od_offset_rem,label = f'Vial{i}', color = colour_array[i])
+        if i==1 or i==4 or i ==2 :
+            ax.plot(time, od_offset_rem,label = f'Vial{i}', color = colour_array[i])
+            ax.grid(True)
 
         #Plotting on bokeh plot:
-        bok_plot.line(time, od_offset_rem,
-                      line_width=2, color = colour_array[i], legend_label=f'Vial{i}')
+        # bok_plot.line(time, od_offset_rem,
+        #               line_width=2, color = colour_array[i], legend_label=f'Vial{i}')
 
         #plotting logarithmic od:
 
@@ -228,8 +230,8 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
 
 
     output_file("od_plots.html")
-    r = row(children = [bok_plot], sizing_mode = 'stretch_width')
-    show(r)
+    # r = row(children = [bok_plot], sizing_mode = 'stretch_width')
+    # show(r)
 
     ax1.set_title("Raw OD 90 vs Time"+ datestring)
     ax1.set_xlabel('Time')
@@ -254,10 +256,10 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     # log_ax.legend()
 
     # Plotting forwards difference derivative.. might be a little too high res...
-    # plot_derivatives(vial_dict,time,colour_array, datestring)
+    plot_derivatives(vial_dict,time,colour_array, datestring)
 
     #Fitting an exp curve to one of the datapoints:
-    timestep = np.mean (np.diff(np.array(time)))
+    # timestep = np.mean (np.diff(np.array(time)))
     # exp_curve_fit(medfilt(vial_dict.get('Vial5'),21),time,st_time=.2,end_time=2,time_step=timestep)
 
 
@@ -309,12 +311,13 @@ def plot_derivatives(vial_od_dict,time,color_legend, datestring):
     fig, ax = plt.subplots()
     for i in range(0,len(vial_od_dict)):
         vial_od = vial_od_dict.get(f'Vial{i}')
-        h= 20
+        h= 50
         od_diff = [central_difference(vial_od,a,h,timestep=timestep) for a in range(0,len(vial_od))]
-        od_diff = medfilt(od_diff,kernel_size=11)
+        od_diff = medfilt(od_diff,kernel_size=5)
         timespace = [timestep*i for i in range(0,len(od_diff))]
-        ax.plot(timespace,od_diff,color = color_legend[i], label = f'Vial{i}')
-        ax.set_ylim((-1,1))
+        if i == 1 or i == 4 or i == 2:
+            ax.plot(timespace,od_diff,color = color_legend[i], label = f'Vial{i}')
+            ax.set_ylim((-1,1))
 
     ax.set_title("First derivative plot" + datestring)
     ax.set_xlabel('Time')
@@ -361,10 +364,12 @@ if __name__ == '__main__':
 
 
     plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_25_Turb_expt\od_135_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_25_Turb_expt\od_90_raw', datestring='Feb23')
+                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_25_Turb_expt\od_90_raw', datestring='Feb26')
 
-    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_135_raw',
-    #              od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_19_real_eric2_expt\od_90_raw', datestring='Feb23')
+    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\T3_Feb_11_Turb_expt\od_135_raw',
+    #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\T3_Feb_11_Turb_expt\od_90_raw', datestring= 'Feb')
+    #
+
 
     plt.show()
 

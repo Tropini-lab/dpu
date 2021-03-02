@@ -1,0 +1,43 @@
+2021-02-22 14:13:11 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 2.03)
+2021-02-22 14:13:11 - eVOLVER - [INFO] - updating chemostat: {'fields_expected_incoming': 49, 'fields_expected_outgoing': 49, 'recurring': True, 'immediate': True, 'value': ['0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--'], 'param': 'pump'}
+2021-02-22 14:13:33 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.89)
+2021-02-22 14:13:52 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.72)
+2021-02-22 14:14:12 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.64)
+2021-02-22 14:14:32 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.50)
+2021-02-22 14:14:52 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.42)
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 0, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 1, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 2, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 3, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 4, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 5, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 6, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 7, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 8, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 9, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 10, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 11, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 12, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 13, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 14, period 60.00
+2021-02-22 14:14:52 - custom_script - [INFO] - chemostat initiated for vial 15, period 60.00
+2021-02-22 14:14:52 - eVOLVER - [INFO] - updating chemostat: {'fields_expected_incoming': 49, 'fields_expected_outgoing': 49, 'recurring': True, 'immediate': True, 'value': ['0.64|60', '0.65|60', '0.66|60', '0.66|60', '0.64|60', '0.62|60', '0.64|60', '0.65|60', '0.65|60', '0.67|60', '0.66|60', '0.62|60', '0.65|60', '0.64|60', '0.64|60', '0.67|60', '1.28|60', '1.30|60', '1.32|60', '1.32|60', '1.29|60', '1.23|60', '1.27|60', '1.31|60', '1.30|60', '1.33|60', '1.32|60', '1.25|60', '1.29|60', '1.28|60', '1.27|60', '1.33|60', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--'], 'param': 'pump'}
+2021-02-22 14:15:12 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.25)
+2021-02-22 14:15:32 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 1.14)
+2021-02-22 14:15:52 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.94)
+2021-02-22 14:16:12 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.80)
+2021-02-22 14:16:32 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.75)
+2021-02-22 14:16:52 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.66)
+2021-02-22 14:17:12 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.52)
+2021-02-22 14:17:32 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.38)
+2021-02-22 14:17:52 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.30)
+2021-02-22 14:23:08 - socketIO-client - [WARNING] - 10.0.0.100:8081/socket.io [connection error] recv disconnected (Connection is already closed.)
+2021-02-22 14:23:09 - socketIO-client - [WARNING] - 10.0.0.100:8081/socket.io [connection error] recv disconnected (Connection is already closed.)
+2021-02-22 14:23:11 - socketIO-client - [WARNING] - 10.0.0.100:8081/socket.io [engine.io waiting for connection] HTTPConnectionPool(host='10.0.0.100', port=8081): Max retries exceeded with url: /socket.io/?EIO=3&transport=polling&t=1614032589969-0 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x12B89E50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it',))
+2021-02-22 14:23:13 - eVOLVER - [INFO] - reconnected to eVOLVER as client
+2021-02-22 14:23:33 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-22 14:23:33 - eVOLVER - [INFO] - stopping all pumps
+2021-02-22 14:23:35 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-22 14:23:35 - eVOLVER - [INFO] - stopping all pumps
+2021-02-22 14:23:35 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-22 14:23:35 - eVOLVER - [INFO] - stopping all pumps

@@ -1,0 +1,25 @@
+2021-02-18 11:43:25 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-18 11:43:25 - eVOLVER - [INFO] - updating chemostat: {'fields_expected_incoming': 49, 'fields_expected_outgoing': 49, 'recurring': True, 'immediate': True, 'value': ['0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--'], 'param': 'pump'}
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 0, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 1, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 2, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 3, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 4, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 5, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 6, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 7, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 8, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 9, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 10, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 11, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 12, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 13, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 14, period 60.00
+2021-02-18 11:44:05 - custom_script - [INFO] - chemostat initiated for vial 15, period 60.00
+2021-02-18 11:44:05 - eVOLVER - [INFO] - updating chemostat: {'fields_expected_incoming': 49, 'fields_expected_outgoing': 49, 'recurring': True, 'immediate': True, 'value': ['0.50|60', '0.49|60', '0.50|60', '0.53|60', '0.54|60', '0.45|60', '0.51|60', '0.48|60', '0.53|60', '0.49|60', '0.49|60', '0.54|60', '0.50|60', '0.49|60', '0.50|60', '0.50|60', '1.00|60', '0.98|60', '1.00|60', '1.05|60', '1.08|60', '0.91|60', '1.03|60', '0.95|60', '1.05|60', '0.98|60', '0.98|60', '1.08|60', '1.00|60', '0.98|60', '1.00|60', '1.00|60', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--'], 'param': 'pump'}
+2021-02-18 11:49:16 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-18 11:49:16 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 11:49:56 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-18 11:49:56 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 11:49:56 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-18 11:49:56 - eVOLVER - [INFO] - stopping all pumps

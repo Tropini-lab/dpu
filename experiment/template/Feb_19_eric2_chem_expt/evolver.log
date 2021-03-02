@@ -1,0 +1,5 @@
+2021-02-18 14:57:44 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-18 14:57:45 - eVOLVER - [CRITICAL] - exception list indices must be integers or slices, not numpy.float64 stopped the experiment
+2021-02-18 14:57:45 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 14:57:45 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-18 14:57:45 - eVOLVER - [INFO] - stopping all pumps

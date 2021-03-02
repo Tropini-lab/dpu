@@ -1,0 +1,8 @@
+2021-02-18 15:39:44 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-18 15:44:04 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.22)
+2021-02-18 15:44:36 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-18 15:44:36 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 15:44:38 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-18 15:44:38 - eVOLVER - [INFO] - stopping all pumps
+2021-02-18 15:44:38 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-18 15:44:38 - eVOLVER - [INFO] - stopping all pumps

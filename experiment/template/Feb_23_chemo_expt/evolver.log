@@ -1,0 +1,13 @@
+2021-02-23 14:42:38 - eVOLVER - [INFO] - updating temperatures (max. deltaT is 0.61)
+2021-02-23 14:42:38 - eVOLVER - [INFO] - setting initial OD reading
+2021-02-23 14:42:38 - eVOLVER - [INFO] - updating chemostat: {'fields_expected_incoming': 49, 'fields_expected_outgoing': 49, 'recurring': True, 'immediate': True, 'value': ['0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '0|0', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--', '--'], 'param': 'pump'}
+2021-02-23 14:42:58 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.65)
+2021-02-23 14:43:19 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.76)
+2021-02-23 14:43:39 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.55)
+2021-02-23 14:43:58 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 0.35)
+2021-02-23 14:54:39 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-02-23 14:54:39 - eVOLVER - [INFO] - stopping all pumps
+2021-02-23 14:54:41 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-02-23 14:54:41 - eVOLVER - [INFO] - stopping all pumps
+2021-02-23 14:54:41 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-02-23 14:54:41 - eVOLVER - [INFO] - stopping all pumps
