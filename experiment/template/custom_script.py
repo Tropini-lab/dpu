@@ -157,6 +157,18 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
     # send fluidic command only if we are actually turning on any of the pumps
     if MESSAGE != ['--'] * 48:
+        #Run every efflux pump each time any influx pump runs
+        # This protects the system against overflows in case vials are connected wrongly....
+
+        #Find the max efflux pumping time in the MESSAGE
+        num_message = [int(x) for x in MESSAGE if x != '--']
+        max_time = max(num_message)
+
+        #Assign all efflux pumps to the max pumping time.
+        for index in range(16,32):
+            MESSAGE[index] = str(max_time)
+
+        #Sending fluid commands to evolver:
         eVOLVER.fluid_command(MESSAGE)
 
         # your_FB_function_here() #good spot to call feedback functions for dynamic temperature, stirring, etc for ind. vials
