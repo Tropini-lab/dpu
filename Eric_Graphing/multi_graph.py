@@ -29,9 +29,9 @@ def third_order(x,a,b,c,d):
     return a*(x**3) + b*(x**2) + c*x + d
 
 def three_dim(data, c0, c1, c2, c3, c4, c5):
-    x = data[0]
-    y = data[1]
-    z= float(c0 + c1*x + c2*y + c3*x**2 + c4*x*y + c5*y**2)
+    x = data[0]   # OD 135 data
+    y = data[1]   # OD 90 data
+    z= float(c0 + c1*y + c2*x + c3*y**2 + c4*x*y + c5*x**2)
     return z
 
 def run2Dcal(filepath):
@@ -128,7 +128,7 @@ def file_num(filename):
     return filenumber
 
 def remove_offset(OD, target_baseline=30000):
-    vial_baseline = np.mean(OD[:5])
+    vial_baseline = np.mean(OD[:1])
     add_on = target_baseline- vial_baseline
     newOD = OD+ add_on
     return newOD
@@ -167,9 +167,9 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     vial_dict = dict()
 
     #For bokeh plot:
-    # bok_plot = figure(title="OD Versus Time", x_axis_label='Time (hours)', y_axis_label='OD')
+    bok_plot = figure(title="OD Versus Time", x_axis_label='Time (hours)', y_axis_label='OD')
 
-    for i,(OD_135_filepath, OD_90_filepath) in enumerate(zip(od_90_files_list,od_135_files_list)):
+    for i,(OD_90_filepath, OD_135_filepath) in enumerate(zip(od_90_files_list,od_135_files_list)):
 
         #Creating the current dataframe:
         df_90 = pd.read_csv(OD_90_filepath)
@@ -188,23 +188,20 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         raw_od_90 = np.array(df_90["OD"].tolist())
         raw_od_135 = np.array(df_135["OD"].tolist())
 
-
         #Retriving the 3D calibration curve:
         c0, c1, c2, c3, c4, c5= cal_3d_params.get(f'Vial{i}')
 
-
         #Converting raw data into OD using 3D function:
-
-        od = np.real([three_dim([float(x),float(y)],c0,c1,c2,c3,c4,c5) for x,y in zip(raw_od_90,raw_od_135)])
+        od = np.real([three_dim([float(x),float(y)],c0,c1,c2,c3,c4,c5) for x,y in zip(raw_od_135,raw_od_90)])
 
         od_offset_rem = remove_offset(od,target_baseline=0) ## Zeroing all of the initial OD's
-
+        # od_offset_rem = od
         #Adding a median filter
-        od_offset_rem = medfilt(np.array(od_offset_rem), kernel_size=17)
+        od_offset_rem = medfilt(np.array(od_offset_rem), kernel_size=7)
 
         #Removing offset on raw data ( making it all start at the same spot...
-        raw_od_90_offset_rem = remove_offset(raw_od_90)
-        raw_od_135_offset_rem = remove_offset(raw_od_135)
+        raw_od_90_offset_rem = raw_od_90 #remove_offset(raw_od_90)
+        raw_od_135_offset_rem = raw_od_135 # remove_offset(raw_od_135)
 
         #Adding to vial od dict:
         vial_dict[f'Vial{i}'] = od_offset_rem
@@ -216,22 +213,16 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         ax2.grid(True)
 
         #Plotting converted od:
-        if i==1 or i==4 or i ==2 :
-            ax.plot(time, od_offset_rem,label = f'Vial{i}', color = colour_array[i])
+        if i in [4,5]:
+            ax.plot(time[:int(.95*len(time))], od_offset_rem[:int(.95*len(time))], color = colour_array[i])
             ax.grid(True)
-
-        #Plotting on bokeh plot:
-        # bok_plot.line(time, od_offset_rem,
-        #               line_width=2, color = colour_array[i], legend_label=f'Vial{i}')
-
-        #plotting logarithmic od:
-
-        # log_ax.plot(time[200:450],np.log(medfilt(od_offset_rem[200:450], kernel_size=41)), label = f'Vial{i}', color = colour_array[i])
+            # Plotting on bokeh plot:
+            bok_plot.line(time[:int(.95*len(time))], od_offset_rem[:int(.95*len(time))],line_width=2, color = colour_array[i], legend=f'Vial{i}')
 
 
     output_file("od_plots.html")
-    # r = row(children = [bok_plot], sizing_mode = 'stretch_width')
-    # show(r)
+    show(bok_plot)
+
 
     ax1.set_title("Raw OD 90 vs Time"+ datestring)
     ax1.set_xlabel('Time')
@@ -243,9 +234,9 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     ax2.set_ylabel("Raw OD 135")
     ax2.legend()
 
-    ax.set_title("OD vs Time")
-    ax.set_xlabel('Time (hrs)')
-    ax.set_ylabel("OD")
+    ax.set_title("Trial 2")
+    ax.set_xlabel('Time (hrs)', fontsize = 'large')
+    ax.set_ylabel("OD", fontsize = 'large')
     # ax.set_xlim(left = 22)
     ax.legend()
     #
@@ -315,9 +306,8 @@ def plot_derivatives(vial_od_dict,time,color_legend, datestring):
         od_diff = [central_difference(vial_od,a,h,timestep=timestep) for a in range(0,len(vial_od))]
         od_diff = medfilt(od_diff,kernel_size=5)
         timespace = [timestep*i for i in range(0,len(od_diff))]
-        if i == 1 or i == 4 or i == 2:
-            ax.plot(timespace,od_diff,color = color_legend[i], label = f'Vial{i}')
-            ax.set_ylim((-1,1))
+        ax.plot(timespace,od_diff,color = color_legend[i], label = f'Vial{i}')
+        ax.set_ylim((-1,1))
 
     ax.set_title("First derivative plot" + datestring)
     ax.set_xlabel('Time')
@@ -363,12 +353,12 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
 if __name__ == '__main__':
 
 
-    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_25_Turb_expt\od_135_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_25_Turb_expt\od_90_raw', datestring='Feb26')
+    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_2_Turb_expt\od_90_raw',
+                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_2_Turb_expt\od_135_raw', datestring='Feb26')
 
-    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\T3_Feb_11_Turb_expt\od_135_raw',
-    #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\T3_Feb_11_Turb_expt\od_90_raw', datestring= 'Feb')
-    #
+    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw',
+    #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw', datestring= 'Feb')
+
 
 
     plt.show()
