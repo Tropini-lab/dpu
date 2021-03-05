@@ -124,6 +124,20 @@ class Zeroing:
         output_file("od_plots.html")
         show(bok_plot)
 
+    def od_zeroing(self,window_size,vial_num):
+        yeeet = 1
+
+        #Get dataframes of OD 90, OD 135
+
+        #Get average baseline readings of OD 90, OD 135
+
+        #Create and adjustment factor from baseline to zero
+
+        #Add this adjustment factor onto original OD data
+
+        #Return adjusted OD 135's,OD 90's
+
+
 if __name__ == '__main__':
     cal_dict_90 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
     cal_dict_135 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
@@ -135,31 +149,6 @@ if __name__ == '__main__':
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()
-
-
-
-
-#
-# for i in range(0,16):
-#     medians = cal_dict["medians"]
-#     measured_data = cal_dict["measured_data"]
-#     c0, c1, c2, c3, c4, c5 = cal_3d_params.get(f'Vial{1}')
-#
-# high_data = np.array([float(32157),float(26200)]) #135, 90
-# initial_data = np.array([float(51792),float(28620)])# 135, 90
-# true_zero_data = np.array([np.mean([float(53078),float(51236)]),np.mean([float(27476),float(27784)])]) #135,90
-#
-#
-# #Outputting what high data would be via zeroing OD values:
-# initial_od = three_dim(list(initial_data),c0, c1, c2, c3, c4, c5)
-# high_od = three_dim(list(high_data),c0, c1, c2, c3, c4, c5)
-# zero_by_od = high_od-initial_od
-#
-# #Outputting what hight data would be via zeroing raw values:
-# input = np.add(np.subtract(true_zero_data,initial_data),high_data)
-# zero_by_raw = three_dim(input,c0, c1, c2, c3, c4, c5)
-#
-# print("Calibrating by optical density:", zero_by_od, "Calibrating by raw", zero_by_raw)
 
 
 

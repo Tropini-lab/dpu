@@ -213,11 +213,12 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         ax2.grid(True)
 
         #Plotting converted od:
-        if i in [4,5]:
-            ax.plot(time[:int(.95*len(time))], od_offset_rem[:int(.95*len(time))], color = colour_array[i])
-            ax.grid(True)
+        dil_dict = {5:'1.0',10:'1.5',14:'2.0'}
+        dil_color_dict = {5:'violet',10:'blue',14:'rosybrown'}
+        if i in [5,10,14]:
+            ax.plot(time[:int(.55*len(time))], od_offset_rem[:int(.55*len(time))], color = dil_color_dict[i], label ='D= '+ dil_dict[i] + ' / hour' )
             # Plotting on bokeh plot:
-            bok_plot.line(time[:int(.95*len(time))], od_offset_rem[:int(.95*len(time))],line_width=2, color = colour_array[i], legend=f'Vial{i}')
+            bok_plot.line(time[:int(.55*len(time))], od_offset_rem[:int(.55*len(time))],line_width=2, color = colour_array[i], legend=dil_dict[i] + ' / hour')
 
 
     output_file("od_plots.html")
@@ -234,10 +235,9 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     ax2.set_ylabel("Raw OD 135")
     ax2.legend()
 
-    ax.set_title("Trial 2")
-    ax.set_xlabel('Time (hrs)', fontsize = 'large')
-    ax.set_ylabel("OD", fontsize = 'large')
-    # ax.set_xlim(left = 22)
+    ax.set_title("Chemostat Mode", fontsize = 'xx-large')
+    ax.set_xlabel('Time (hrs)', fontsize = 'xx-large')
+    ax.set_ylabel("OD", fontsize = 'xx-large')
     ax.legend()
     #
     # log_ax.set_title('Log Od vs Time')
@@ -353,8 +353,8 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
 if __name__ == '__main__':
 
 
-    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_2_Turb_expt\od_90_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_2_Turb_expt\od_135_raw', datestring='Feb26')
+    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_23_T2_chemo_expt\od_90_raw',
+                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_23_T2_chemo_expt\od_135_raw', datestring='Feb26')
 
     # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw',
     #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw', datestring= 'Feb')
