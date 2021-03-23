@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 ##### USER DEFINED GENERAL SETTINGS #####
 
 #set new name for each experiment, otherwise files will be overwritten
-EXP_NAME = 'Mar_2_Turb_expt'
+EXP_NAME = 'Mar_19_osmo_expt'
 EVOLVER_IP = '10.0.0.100'
 EVOLVER_PORT = 8081
 
@@ -37,7 +37,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
     ##### USER DEFINED VARIABLES #####
 
-    turbidostat_vials = [5] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
+    turbidostat_vials = [7] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
     stop_after_n_curves = np.inf #set to np.inf to never stop, or integer value to stop diluting after certain number of growth curves
     OD_values_to_average = 5  # Number of values to calculate the OD average
 
@@ -45,8 +45,8 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
     # upper_thresh = [0.4] * len(vials) #to set all vials to the same value, creates 16-value list
 
     #Alternatively, use 16 value list to set different thresholds, use 9999 for vials not being used
-    lower_thresh = [0.1, 0.2, .15, 99, 9999, .15, 9999, 9999, 9999, .1, .2, 9999, 9999, 9999, 9999, 9999]
-    upper_thresh = [0.2, 0.25, .2, 99, 9999, .2, 9999, 9999, 9999, .2, .25, 9999, 9999, 9999, 9999, 9999]
+    lower_thresh = [99, 0.1, 99, 0.2, 9999, 999, 9999, .2, 9999, 99, 99, 9999, 9999, 9999, 9999, .5]
+    upper_thresh = [99, 0.2, 99, 0.4, 9999, .999, 9999, .4, 9999, 99, .99, 9999, 9999, 9999, 9999, .6]
 
 
     ##### END OF USER DEFINED VARIABLES #####
@@ -56,7 +56,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
     #Tunable settings for overflow protection, pump scheduling etc. Unlikely to change between expts
 
     time_out = 5 #(sec) additional amount of time to run efflux pump
-    pump_wait = 2.5 # (min) minimum amount of time to wait between pump events
+    pump_wait = 2 # (min) minimum amount of time to wait between pump events
 
     ##### End of Turbidostat Settings #####
 
@@ -92,12 +92,24 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
         if data.size != 0:
             # Take median to avoid outlier
 
-            #If the last pumping event is < 5 min, reduce the median filter size to
             od_values_from_file = data[:,1]
-            print("The od values from a file", od_values_from_file)
-            average_OD = float(np.median(od_values_from_file))
 
+            # Finding the time since the last pump:
+            file_name = "vial{0}_pump_log.txt".format(x)
+            file_path = os.path.join(save_path, EXP_NAME,
+                                     'pump_log', file_name)
+            data = np.genfromtxt(file_path, delimiter=',')
+            last_pump = data[len(data) - 1][0]
+            print(f'Vial {x} time since previous pump (min)', (elapsed_time-last_pump)*60)
 
+            #If the last pumping event is within the 2* pump wait, take less values to calculate the median
+            if ((elapsed_time - last_pump) * 60) <= 2*pump_wait:
+                if len(od_values_from_file)>3:
+                    average_OD = float(np.median(od_values_from_file[-3:]))
+                    print("Recent pump event detected, using median of past 3 OD's:", od_values_from_file[-3:])
+            else:
+                average_OD = float(np.median(od_values_from_file))
+                print("No recent pump event detected, using median from past 6 OD's", od_values_from_file)
 
             #if recently exceeded upper threshold, note end of growth curve in ODset, allow dilutions to occur and growthrate to be measured
             if (average_OD > upper_thresh[x]) and (ODset != lower_thresh[x]):
@@ -105,7 +117,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 text_file.write("{0},{1}\n".format(elapsed_time,
                                                    lower_thresh[x]))
                 text_file.close()
-                ODset = lower_thresh[x]
+                ODset = lower_thresh[x] #By using the OD set, if the first dilution falls short, another one can occur
                 # calculate growth rate
                 eVOLVER.calc_growth_rate(x, ODsettime, elapsed_time)
 
@@ -114,18 +126,16 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 text_file = open(ODset_path, "a+")
                 text_file.write("{0},{1}\n".format(elapsed_time, upper_thresh[x]))
                 text_file.close()
-                ODset = upper_thresh[x]
+                ODset = upper_thresh[x]  #If we have approximately reached the lower OD, don't dilute, make od set high again
 
 
             #if need to dilute to lower threshold, then calculate amount of time to pump
 
-            # if average_OD > ODset and collecting_more_curves: #This line can result in double pumps for a single diltuion
-            if average_OD > upper_thresh[x]:
-                print("Average OD ",average_OD, " past threshold ", upper_thresh[x])
+            if average_OD > ODset and collecting_more_curves: #This line can result in double pumps for a single dilution
+                print("Average OD ",average_OD, " greater than ODset ", ODset)
 
                 time_in = - (np.log(lower_thresh[x]/average_OD)*VOLUME)/flow_rate[x]
 
-                #TODO: Can influx pumps run longer than 20 seconds? Test this.
 
                 if time_in > 37:  #Eric changed this threshold from 20 to 35 seconds.. This way pumping events don't have to be split up.
                     time_in = 37
@@ -161,8 +171,8 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
         # This protects the system against overflows in case vials are connected wrongly....
 
         #Find the max efflux pumping time in the MESSAGE
-        num_message = [int(x) for x in MESSAGE if x != '--']
-        max_time = max(num_message)
+        num_message = [float(x) for x in MESSAGE if x != '--']
+        max_time = round(max(num_message),2)
 
         #Assign all efflux pumps to the max pumping time.
         for index in range(16,32):

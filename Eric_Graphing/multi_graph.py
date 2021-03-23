@@ -213,12 +213,13 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         ax2.grid(True)
 
         #Plotting converted od:
-        dil_dict = {5:'1.0',10:'1.5',14:'2.0'}
-        dil_color_dict = {5:'violet',10:'blue',14:'rosybrown'}
-        if i in [5,10,14]:
-            ax.plot(time[:int(.55*len(time))], od_offset_rem[:int(.55*len(time))], color = dil_color_dict[i], label ='D= '+ dil_dict[i] + ' / hour' )
+        os_dict = {0: '226', 1: '400', 2: '300', 3: '500', 5: '800', 7: '226 ', 8: '400', 9: '226', 12: '500', 13: '300',
+                   15: '800'}
+        os_color_dict = {'226': 'black', '300': 'blue', '400': 'cyan', '500': 'green', '600': 'yellow', '800': 'orange'}
+        if i in [0,1,2,3,5,7,8,9,12,13,15]:
+            ax.plot(time, od_offset_rem, color = os_color_dict.get(os_dict.get(i)), label = f'Osm = {os_dict[i]}')
             # Plotting on bokeh plot:
-            bok_plot.line(time[:int(.55*len(time))], od_offset_rem[:int(.55*len(time))],line_width=2, color = colour_array[i], legend=dil_dict[i] + ' / hour')
+            bok_plot.line(time, od_offset_rem,line_width=2, color = os_color_dict.get(os_dict.get(i)),legend =  f'Osm = {os_dict[i]}')
 
 
     output_file("od_plots.html")
@@ -235,7 +236,7 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     ax2.set_ylabel("Raw OD 135")
     ax2.legend()
 
-    ax.set_title("Chemostat Mode", fontsize = 'xx-large')
+    ax.set_title("Turbidostat Mode", fontsize = 'xx-large')
     ax.set_xlabel('Time (hrs)', fontsize = 'xx-large')
     ax.set_ylabel("OD", fontsize = 'xx-large')
     ax.legend()
@@ -247,7 +248,7 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
     # log_ax.legend()
 
     # Plotting forwards difference derivative.. might be a little too high res...
-    plot_derivatives(vial_dict,time,colour_array, datestring)
+    # plot_derivatives(vial_dict,time,colour_array, datestring)
 
     #Fitting an exp curve to one of the datapoints:
     # timestep = np.mean (np.diff(np.array(time)))
@@ -353,8 +354,8 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
 if __name__ == '__main__':
 
 
-    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_23_T2_chemo_expt\od_90_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Feb_23_T2_chemo_expt\od_135_raw', datestring='Feb26')
+    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_19_osmo_expt\od_90_raw',
+                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_19_osmo_expt\od_135_raw', datestring='Mar5')
 
     # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw',
     #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw', datestring= 'Feb')

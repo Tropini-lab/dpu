@@ -103,9 +103,14 @@ class Zeroing:
         #Initializing bokeh plot:
         bok_plot = figure(title="OD zeroed with raw", x_axis_label='Time (hours)', y_axis_label='OD')
 
-        for i in range(16):
+        os_dict ={0:'226',1:'400',2:'300',3:'500',5:'800',7:'226',8:'400',9:'226',12:'500',13:'300',15:'800'}
+        os_color_dict = {'226':'black','300':'blue','400':'cyan','500':'green','600':'yellow','800':'orange'}
 
-            factor,df_135,df_90 = self.raw_zeroing(101,vial_num = i)
+        #os dict MAY HAVE BEEN WRONG MARCH 18 TRIAL: 11:900,12:1200, 113:350, 15:800 - SEEMS UNLIEKELY THOUGH?
+
+        for i in [0,1,2,3,5,7,8,9,12,13,15]:
+
+            factor,df_135,df_90 = self.raw_zeroing(270,vial_num = i)
 
             #Adding on the raw adjustment factor:
             df_135["OD"] = df_135["OD"] + float(factor[0])
@@ -119,7 +124,7 @@ class Zeroing:
             time = df_90["Time"].tolist()
 
             #plot against time
-            bok_plot.line(time, medfilt(np.array(od),kernel_size=7),line_width=2, color=colour_array[i], legend=f'Vial{i}')
+            bok_plot.line(time, medfilt(np.array(od),kernel_size=11),line_width=2, color=os_color_dict.get(os_dict.get(i)), legend=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
         output_file("od_plots.html")
         show(bok_plot)
@@ -144,8 +149,8 @@ if __name__ == '__main__':
     cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw'
-    od_135_folder = r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw'
+    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_19_osmo_expt\od_90_raw'
+    od_135_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_19_osmo_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()
