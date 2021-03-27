@@ -216,10 +216,10 @@ def plot_3D_data(od_90_folder, od_135_folder, datestring):
         os_dict = {0: '226', 1: '400', 2: '300', 3: '500', 5: '800', 7: '226 ', 8: '400', 9: '226', 12: '500', 13: '300',
                    15: '800'}
         os_color_dict = {'226': 'black', '300': 'blue', '400': 'cyan', '500': 'green', '600': 'yellow', '800': 'orange'}
-        if i in [0,1,2,3,5,7,8,9,12,13,15]:
-            ax.plot(time, od_offset_rem, color = os_color_dict.get(os_dict.get(i)), label = f'Osm = {os_dict[i]}')
+        if i in [0,1,2,5,6,8,11,12]:
+            ax.plot(time, od_offset_rem, color = colour_array[i], label = f'Vial{i}')
             # Plotting on bokeh plot:
-            bok_plot.line(time, od_offset_rem,line_width=2, color = os_color_dict.get(os_dict.get(i)),legend =  f'Osm = {os_dict[i]}')
+            bok_plot.line(time, od_offset_rem,line_width=2, color = colour_array[i],legend =  f'Vial{i}')
 
 
     output_file("od_plots.html")
@@ -354,8 +354,8 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
 if __name__ == '__main__':
 
 
-    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_19_osmo_expt\od_90_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_19_osmo_expt\od_135_raw', datestring='Mar5')
+    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_90_raw',
+                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_135_raw', datestring='Mar5')
 
     # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw',
     #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw', datestring= 'Feb')
