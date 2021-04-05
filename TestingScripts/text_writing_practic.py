@@ -111,11 +111,14 @@ class Zeroing:
         b3 = figure(title = "OD 135 degrees Raw", x_axis_label = 'Time (hours)', y_axis_label = 'OD')
         b4 = figure(title = "OD 90 degrees Raw", x_axis_label = 'Time (hours)', y_axis_label = 'OD')
 
-        os_dict ={0:'230',1:'250',2:'300',3:'350 Turbidostat',5:'400',6:'450',8:'600',9:'700',11:'800',12:'900',13:'1200',15:'350'} # March 18th Trial
+        # os_dict ={0:'230',1:'250',2:'300',3:'350 Turbidostat',5:'400',6:'450',8:'600',9:'700',11:'800',12:'900',13:'1200',15:'350'} # March 18th Trial
 
         # os_dict = {0:'226',1:'400',2:'300', 3:'500', 5:'800' ,7:'226', 9:'226', 12:'500', 13:'300',15:'800' }  # March 19th Trial
 
-        # os_dict = {0:'',1:'',2:'',3:'',4:'',5:'',6:'',7:'',8:'',9:'',10:'',11:'',12:'',13:'',14:'',15:''}
+        os_dict = {0:'',1:'230',2:'',3:'',4:'',5:'450',6:'',7:'',8:'',9:'',10:'',11:'920',12:'',13:'',14:'',15:''}
+
+        g_dict = {1:'.49', 5:'.58', 11: '.39'}
+
 
         #os dict MAY HAVE BEEN WRONG MARCH 18 TRIAL: 11:900,12:1200, 113:350, 15:800 - SEEMS UNLIEKELY THOUGH?
         export_df_rw_zero = pd.DataFrame()      #Create a dataframe to save the OD data in an excel file:
@@ -124,9 +127,9 @@ class Zeroing:
         export_df_od_90 = pd.DataFrame()
         export_df_time = pd.DataFrame()
 
-        # for i in [0,1,2,3,5,9,12,13,15]:
-        # for i in [0,1,2,5,6,8,11,12]:
-        for i in [0,1,2,3,5,6,8,9,11,12,13,15]:
+        plt.figure()
+
+        for i in [1,5,11]:
 
             factor,rw_df_135,rw_df_90 = self.raw_zeroing(360,vial_num = i)
             od_zero_with_od = self.od_zeroing(i,rw_df_135,rw_df_90,window_size=360)
@@ -151,19 +154,21 @@ class Zeroing:
             export_df_od_90[f'OD 90 {os_dict.get(i)} mOsm vial {i}'] = rw_df_90["OD"].tolist()
 
         #plot against time
-            b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=11),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=11),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
+            b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=7),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'avg growth = {g_dict.get(i)}' )
             b3.line(time,rw_df_135["OD"].tolist(),color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
             b4.line(time, rw_df_90["OD"].tolist(), color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
+            plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=11), color = colour_array[i],label =f'mOsm = {os_dict.get(i)}' + f'avg growth = {g_dict.get(i)}')
+
         export_df_time['Time (hours)'] = time #Adding time to the dataframe
 
-        with pd.ExcelWriter(r'C:\Users\erlyall\PycharmProjects\dpu\Mar18_M9_Osmolality_Testing_Data.xlsx') as writer:
-            export_df_rw_zero.to_excel(writer, sheet_name='OD Raw Zeroed')
-            export_df_od_zero.to_excel(writer, sheet_name='OD_Zeroed')
-            export_df_od_135.to_excel(writer,sheet_name='OD 135 Raw')
-            export_df_od_90.to_excel(writer,sheet_name='OD 90 Raw')
-            export_df_time.to_excel(writer, sheet_name= 'Time')
+        # with pd.ExcelWriter(r'C:\Users\erlyall\PycharmProjects\dpu\Mar18_M9_Osmolality_Testing_Data.xlsx') as writer:
+        #     export_df_rw_zero.to_excel(writer, sheet_name='OD Raw Zeroed')
+        #     export_df_od_zero.to_excel(writer, sheet_name='OD_Zeroed')
+        #     export_df_od_135.to_excel(writer,sheet_name='OD 135 Raw')
+        #     export_df_od_90.to_excel(writer,sheet_name='OD 90 Raw')
+        #     export_df_time.to_excel(writer, sheet_name= 'Time')
 
 
         output_file("od_plots.html")
@@ -172,9 +177,15 @@ class Zeroing:
         #Saving the bokeh plot as a scalable graphics file:
 
 
-        export_svg(grid, filename="March18_Osmo_Trials.svg")
+        # export_svg(grid, filename="March18_Osmo_Trials.svg")
 
-        show(grid)
+        show(grid,sizing_mode='stretch_both')
+        plt.legend()
+        plt.title("Phage-Osmo Trial")
+        plt.xlabel('Time (hours)')
+        plt.ylabel('OD')
+        plt.grid(True)
+        plt.show()
 
     def od_zeroing(self,vial_num, df_135, df_90,window_size = 1):
         i = vial_num
@@ -198,8 +209,8 @@ if __name__ == '__main__':
     cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_18_osmo_expt\od_90_raw'
-    od_135_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_18_osmo_expt\od_135_raw'
+    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_Phage_osmo_expt\od_90_raw'
+    od_135_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_Phage_osmo_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()

@@ -57,7 +57,7 @@ class EvolverNamespace(BaseNamespace):
         logger.debug('broadcast received')
         elapsed_time = round((time.time() - self.start_time) / 3600, 4)
         logger.debug('elapsed time: %.4f hours' % elapsed_time)
-        print("{0}: {1} Hours".format(EXP_NAME, elapsed_time))
+        # print("{0}: {1} Hours".format(EXP_NAME, elapsed_time))
         # are the calibrations in yet?
         if not self.check_for_calibrations():
             logger.warning('calibration files still missing, skipping custom '
