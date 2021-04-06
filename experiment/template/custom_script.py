@@ -37,7 +37,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
     ##### USER DEFINED VARIABLES #####
 
-    turbidostat_vials = [1,5] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
+    turbidostat_vials = [1] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
     stop_after_n_curves = np.inf #set to np.inf to never stop, or integer value to stop diluting after certain number of growth curves
     OD_values_to_average = 5  # Number of values to calculate the OD average
 
@@ -45,8 +45,8 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
     # upper_thresh = [0.4] * len(vials) #to set all vials to the same value, creates 16-value list
 
     #Alternatively, use 16 value list to set different thresholds, use 9999 for vials not being used
-    lower_thresh = [99, 0.2, 99, 99, 9999, 0.2, 99, 99, 9999, 99, 99, 99, 9999, 9999, 9999, 99]
-    upper_thresh = [99, 0.4, 99, 99, 9999, 0.4, 99, 99, 9999, 99, 99, 99, 9999, 9999, 9999, 99]
+    lower_thresh = [99, 0.2, 99, 99, 9999, 99, 99, 99, 9999, 99, 99, 99, 9999, 9999, 9999, 99]
+    upper_thresh = [99, 0.4, 99, 99, 9999, 99, 99, 99, 9999, 99, 99, 99, 9999, 9999, 9999, 99]
 
 
     ##### END OF USER DEFINED VARIABLES #####

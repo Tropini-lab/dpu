@@ -117,8 +117,6 @@ class Zeroing:
 
         os_dict = {0:'',1:'230',2:'',3:'',4:'',5:'450',6:'',7:'',8:'',9:'',10:'',11:'920',12:'',13:'',14:'',15:''}
 
-        g_dict = {1:'.49', 5:'.58', 11: '.39'}
-
 
         #os dict MAY HAVE BEEN WRONG MARCH 18 TRIAL: 11:900,12:1200, 113:350, 15:800 - SEEMS UNLIEKELY THOUGH?
         export_df_rw_zero = pd.DataFrame()      #Create a dataframe to save the OD data in an excel file:
@@ -129,7 +127,7 @@ class Zeroing:
 
         plt.figure()
 
-        for i in [1,5,11]:
+        for i in [1,5,6,11]:
 
             factor,rw_df_135,rw_df_90 = self.raw_zeroing(360,vial_num = i)
             od_zero_with_od = self.od_zeroing(i,rw_df_135,rw_df_90,window_size=360)
@@ -155,11 +153,11 @@ class Zeroing:
 
         #plot against time
             b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=7),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'avg growth = {g_dict.get(i)}' )
+            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}')
             b3.line(time,rw_df_135["OD"].tolist(),color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
             b4.line(time, rw_df_90["OD"].tolist(), color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
-            plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=11), color = colour_array[i],label =f'mOsm = {os_dict.get(i)}' + f'avg growth = {g_dict.get(i)}')
+            plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=11), color = colour_array[i],label =f'mOsm = {os_dict.get(i)}')
 
         export_df_time['Time (hours)'] = time #Adding time to the dataframe
 
@@ -209,8 +207,8 @@ if __name__ == '__main__':
     cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_Phage_osmo_expt\od_90_raw'
-    od_135_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_Phage_osmo_expt\od_135_raw'
+    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_phage_osmo_expt\od_90_raw'
+    od_135_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_phage_osmo_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()
