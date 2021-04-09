@@ -127,7 +127,7 @@ class Zeroing:
 
         plt.figure()
 
-        for i in [1,5,6,11]:
+        for i in [1,5,11]:
 
             factor,rw_df_135,rw_df_90 = self.raw_zeroing(360,vial_num = i)
             od_zero_with_od = self.od_zeroing(i,rw_df_135,rw_df_90,window_size=360)
