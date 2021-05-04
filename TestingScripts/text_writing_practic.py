@@ -115,7 +115,7 @@ class Zeroing:
 
         # os_dict = {0:'226',1:'400',2:'300', 3:'500', 5:'800' ,7:'226', 9:'226', 12:'500', 13:'300',15:'800' }  # March 19th Trial
 
-        os_dict = {0:'',1:'230',2:'',3:'',4:'',5:'450',6:'',7:'',8:'',9:'',10:'',11:'920',12:'',13:'',14:'',15:''}
+        os_dict = {0:'220 +',1:'220 -',2:'220 +',3:'220 +',4:'',5:'455+',6:'455+',7:'Sterile',8:'455+',9:'455-',10:'',11:'925 +',12:'925 +',13:'925 +',14:'',15:'925 -'}
 
 
         #os dict MAY HAVE BEEN WRONG MARCH 18 TRIAL: 11:900,12:1200, 113:350, 15:800 - SEEMS UNLIEKELY THOUGH?
@@ -127,10 +127,12 @@ class Zeroing:
 
         plt.figure()
 
-        for i in [1,5,11]:
+        # figure
+        for i in [11,12,13,15]:
+        # for i in range(0,16):
 
-            factor,rw_df_135,rw_df_90 = self.raw_zeroing(360,vial_num = i)
-            od_zero_with_od = self.od_zeroing(i,rw_df_135,rw_df_90,window_size=360)
+            factor,rw_df_135,rw_df_90 = self.raw_zeroing(60,vial_num = i)
+            od_zero_with_od = self.od_zeroing(i,rw_df_135,rw_df_90,window_size=1)
 
             #Adding on the raw adjustment factor:
             df_135 = pd.DataFrame()
@@ -153,11 +155,11 @@ class Zeroing:
 
         #plot against time
             b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=7),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}')
+            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
             b3.line(time,rw_df_135["OD"].tolist(),color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
             b4.line(time, rw_df_90["OD"].tolist(), color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
-            plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=11), color = colour_array[i],label =f'mOsm = {os_dict.get(i)}')
+            plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=11), color = colour_array[i],label =f'Vial {i} + mOsm = {os_dict.get(i)} ')
 
         export_df_time['Time (hours)'] = time #Adding time to the dataframe
 
@@ -179,7 +181,7 @@ class Zeroing:
 
         show(grid,sizing_mode='stretch_both')
         plt.legend()
-        plt.title("Phage-Osmo Trial")
+        plt.title("Feb 5 Batch Trial")
         plt.xlabel('Time (hours)')
         plt.ylabel('OD')
         plt.grid(True)
@@ -207,8 +209,8 @@ if __name__ == '__main__':
     cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_phage_osmo_expt\od_90_raw'
-    od_135_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_29_phage_osmo_expt\od_135_raw'
+    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_90_raw'
+    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()

@@ -1,0 +1,5 @@
+Experiment: April_28_Phage_Osmo_expt vial 7, Wed Apr 28 17:10:52 2021
+0,0
+0.0245,0.4
+139.2567,0.2
+139.2679,0.4

@@ -1,13 +1,12 @@
 import numpy as np
 import pandas as pd
-array1 = np.array([3,4,5,6,7,8,9,10])
-array2 = ([2,5,1,3,5,7,4,12])
+import os
+x = 1
+EXP_NAME = 'April_28_Phage_Osmo_expt'
+save_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template'
+file_name = "vial{0}_pump_log.txt".format(x)
+file_path = os.path.join(save_path, EXP_NAME,'pump_log', file_name)
+print(file_path)
+data = np.genfromtxt(file_path, delimiter=',')
+print("Amount of pumps ", len(data)-2)
 
-df = pd.DataFrame()
-
-df['Array1'] = array1
-df['Array2'] = array2
-
-df.to_csv(r'C:\Users\erlyall\PycharmProjects\dpu\CarolinaTestData.csv', index = False)
-
-print('Complete')
