@@ -115,7 +115,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 average_OD = float(np.min(od_values_from_file))
 
             if x == 9:
-                average_OD = float(average_OD + 0.06)
+                average_OD = float(average_OD - 0.13)
 
             #if recently exceeded upper threshold, note end of growth curve in ODset, allow dilutions to occur and growthrate to be measured
             if (average_OD > upper_thresh[x]) and (ODset != lower_thresh[x]):

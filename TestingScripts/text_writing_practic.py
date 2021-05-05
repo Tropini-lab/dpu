@@ -128,8 +128,8 @@ class Zeroing:
         plt.figure()
 
         # figure
-        for i in [11,12,13,15]:
-        # for i in range(0,16):
+        # for i in [0]:
+        for i in range(0,16):
 
             factor,rw_df_135,rw_df_90 = self.raw_zeroing(60,vial_num = i)
             od_zero_with_od = self.od_zeroing(i,rw_df_135,rw_df_90,window_size=1)
@@ -147,15 +147,23 @@ class Zeroing:
             od_zero_with_raw = np.real([self.three_dim([float(x), float(y)], c0, c1, c2, c3, c4, c5) for x, y in zip(df_135["OD"].tolist(), df_90["OD"].tolist())])
             time = rw_df_90["Time"].tolist()
 
+            #Ensuring time and od are the same length:
+            if len(time)>len(od_zero_with_raw):
+                time = time[:len(od_zero_with_raw)]
+            elif len(time)<len(od_zero_with_raw):
+                od_zero_with_raw = od_zero_with_raw[:len(time)]
+
             #Creating an export dataframe:
-            export_df_rw_zero[f'OD  {os_dict.get(i)} mOsm vial {i} '] = od_zero_with_raw
-            export_df_od_zero[f'OD  {os_dict.get(i)} mOsm vial {i}'] = od_zero_with_od
-            export_df_od_135[f'OD 135 {os_dict.get(i)} mOsm vial {i}'] = rw_df_135["OD"].tolist()
-            export_df_od_90[f'OD 90 {os_dict.get(i)} mOsm vial {i}'] = rw_df_90["OD"].tolist()
+            # export_df_rw_zero[f'OD  {os_dict.get(i)} mOsm vial {i} '] = od_zero_with_raw
+            # export_df_od_zero[f'OD  {os_dict.get(i)} mOsm vial {i}'] = od_zero_with_od
+            # export_df_od_135[f'OD 135 {os_dict.get(i)} mOsm vial {i}'] = rw_df_135["OD"].tolist()
+            # export_df_od_90[f'OD 90 {os_dict.get(i)} mOsm vial {i}'] = rw_df_90["OD"].tolist()
+
+
 
         #plot against time
-            b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=7),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=1),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=1),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
             b3.line(time,rw_df_135["OD"].tolist(),color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
             b4.line(time, rw_df_90["OD"].tolist(), color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
@@ -203,7 +211,7 @@ class Zeroing:
 
 
 if __name__ == '__main__':
-    browser = webdriver.Chrome()
+    # browser = webdriver.Chrome()
     cal_dict_90 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
     cal_dict_135 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
     cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
