@@ -59,6 +59,7 @@ class Zeroing:
         return z
 
     def raw_zeroing(self,window_size, vial_num):
+        print("Vial number ", vial_num)
 
         #Two zero vials were used from the calibrations, we take the average raw value of the two of them.
         cal_zero_90  = np.mean((self.cal_dict_90["medians"][vial_num][:2]))
@@ -66,22 +67,12 @@ class Zeroing:
 
         #For interest, let's see what the 3D calibration thinks these are...
         c0, c1, c2, c3, c4, c5 = cal_3d_params.get(f'Vial{vial_num}')
-        print("Vial", vial_num)
-        print("Cal dict 90 \n",self.cal_dict_90)
-        print("Cal dict 135\n", cal_dict_135)
-        print("Cal 135", cal_zero_135, "Cal 90", cal_zero_90)
-        print("OD of what should be 0 on calibration:", self.three_dim([cal_zero_135,cal_zero_90],c0, c1, c2, c3, c4, c5))
-
-
 
         #For interest, let's optimize to find what 0 is on that 3d calibration curve..
         b135 = (49000, 57000)
         b90 = (25000,30000)
         bnds = (b135, b90)
         res = minimize(self.opt_minimize,x0=np.array([53000,25250]),args = ([c0, c1, c2, c3, c4, c5]), bounds = bnds)
-        print("Optimized raw values to get od of 0", res.x)
-        print("Backcalc optimized values:", self.three_dim([res.x[0],res.x[1]],c0, c1, c2, c3, c4, c5))
-
 
         #Getting the median of raw od readings over a window...
 
@@ -90,11 +81,6 @@ class Zeroing:
 
         df_135 = self.get_raw_df(self.od_135_files[vial_num])
         od_135_baseline_median = np.median(df_135["OD"].tolist()[:window_size])
-
-
-
-        print("Expt 135", od_135_baseline_median, "Expt 90", od_90_baseline_median)
-        print("OD of what should be close to zero on experiment:", self.three_dim([od_135_baseline_median,od_90_baseline_median],c0, c1, c2, c3, c4, c5))
 
         factor = [float(res.x[0]-od_135_baseline_median),float(res.x[1]-od_90_baseline_median)]
 
@@ -119,16 +105,16 @@ class Zeroing:
 
 
         #os dict MAY HAVE BEEN WRONG MARCH 18 TRIAL: 11:900,12:1200, 113:350, 15:800 - SEEMS UNLIEKELY THOUGH?
-        export_df_rw_zero = pd.DataFrame()      #Create a dataframe to save the OD data in an excel file:
-        export_df_od_zero = pd.DataFrame()
-        export_df_od_135 = pd.DataFrame()
-        export_df_od_90 = pd.DataFrame()
-        export_df_time = pd.DataFrame()
+        # export_df_rw_zero = pd.DataFrame()      #Create a dataframe to save the OD data in an excel file:
+        # export_df_od_zero = pd.DataFrame()
+        # export_df_od_135 = pd.DataFrame()
+        # export_df_od_90 = pd.DataFrame()
+        # export_df_time = pd.DataFrame()
 
         plt.figure()
 
         # figure
-        # for i in [0]:
+        # for i in [0,1,2,3]:
         for i in range(0,16):
 
             factor,rw_df_135,rw_df_90 = self.raw_zeroing(60,vial_num = i)
@@ -162,14 +148,14 @@ class Zeroing:
 
 
         #plot against time
-            b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=1),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=1),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b3.line(time,rw_df_135["OD"].tolist(),color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
-            b4.line(time, rw_df_90["OD"].tolist(), color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=7),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b3.line(rw_df_135["Time"].tolist(),rw_df_135["OD"].tolist(),color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
+            b4.line(rw_df_90["Time"].tolist(), rw_df_90["OD"].tolist(), color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
             plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=11), color = colour_array[i],label =f'Vial {i} + mOsm = {os_dict.get(i)} ')
 
-        export_df_time['Time (hours)'] = time #Adding time to the dataframe
+        # export_df_time['Time (hours)'] = time #Adding time to the dataframe
 
         # with pd.ExcelWriter(r'C:\Users\erlyall\PycharmProjects\dpu\Mar18_M9_Osmolality_Testing_Data.xlsx') as writer:
         #     export_df_rw_zero.to_excel(writer, sheet_name='OD Raw Zeroed')
