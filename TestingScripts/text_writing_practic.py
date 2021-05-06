@@ -128,8 +128,8 @@ class Zeroing:
         plt.figure()
 
         # figure
-        # for i in [0]:
-        for i in range(0,16):
+        for i in [11,12,13,15]:
+        # for i in range(0,16):
 
             factor,rw_df_135,rw_df_90 = self.raw_zeroing(60,vial_num = i)
             od_zero_with_od = self.od_zeroing(i,rw_df_135,rw_df_90,window_size=1)
@@ -179,15 +179,22 @@ class Zeroing:
         #     export_df_time.to_excel(writer, sheet_name= 'Time')
 
 
-        output_file("od_plots.html")
 
-        grid = gridplot([b1, b2, b3,b4], ncols=2)
+
+        #Adding a interactive legend:
+        for b in [b1,b2,b3,b4]:
+            b.legend.location = "top_left"
+            b.legend.click_policy = "hide"
+
+        grid = gridplot([b2, b3,b4], ncols=1, sizing_mode = 'stretch_width')
+        output_file("od_plots.html")
+        show(grid)
+
         #Saving the bokeh plot as a scalable graphics file:
 
 
         # export_svg(grid, filename="March18_Osmo_Trials.svg")
 
-        show(grid,sizing_mode='stretch_both')
         plt.legend()
         plt.title("Feb 5 Batch Trial")
         plt.xlabel('Time (hours)')
@@ -212,13 +219,13 @@ class Zeroing:
 
 if __name__ == '__main__':
     # browser = webdriver.Chrome()
-    cal_dict_90 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
-    cal_dict_135 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
-    cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
+    cal_dict_90 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
+    cal_dict_135 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
+    cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_90_raw'
-    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_135_raw'
+    od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_90_raw'
+    od_135_folder =r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()

@@ -354,13 +354,13 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
 if __name__ == '__main__':
 
 
-    plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_90_raw',
-                 od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_135_raw', datestring='Mar5')
+    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_90_raw',
+    #              od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_135_raw', datestring='Mar5')
+    #
+    # # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw',
+    # #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw', datestring= 'Feb')
 
-    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw',
-    #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw', datestring= 'Feb')
-
-
+    run2Dcal(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy')
 
     plt.show()
 
