@@ -40,6 +40,7 @@ class EvolverNamespace(BaseNamespace):
     start_time = None
     use_blank = False
     OD_initial = None
+    zeroing_time  = 2 ## Zero up to this time, in hours.
 
     def on_connect(self, *args):
         print("Connected to eVOLVER as client")

@@ -312,9 +312,6 @@ def three_dim(data, c0, c1, c2, c3, c4, c5):
     z= float(c0 + c1*x + c2*y + c3*x**2 + c4*x*y + c5*y**2)
     return z
 
-
-
-
 def combostat(eVOLVER, input_data,vials,elapsed_time):
     #Function that allows some vials to be in chemostat mode, and other vials to be in turbidostat mode..
     yeet = 1
