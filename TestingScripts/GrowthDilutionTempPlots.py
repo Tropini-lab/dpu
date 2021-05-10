@@ -5,6 +5,8 @@ import os
 from bokeh.plotting import figure, output_file, show
 from bokeh.layouts import gridplot
 from bokeh.models import Panel, Tabs
+from bokeh.models import Span
+
 
 
 #Funciton that turns txt files into pandas dataframes.
@@ -18,10 +20,10 @@ def get_raw_df(filepath,name):
 
 #Getting the experiment names:
 EXP_NAME = 'April_28_Phage_Osmo_expt'
-save_path = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template'
+save_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template'
 
 #Turning the pump calibration file into a numpy array?
-file_path = (r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\pump_cal.txt')
+file_path = (r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\pump_cal.txt')
 flow_calibration = np.loadtxt(file_path, delimiter="\t")[0]
 
 
@@ -39,7 +41,7 @@ gr_plot = figure(title="Growth Rate Plots", x_axis_label='Time (hrs)', y_axis_la
 #            toolbar_location=None, tools="")
 dil_plot = figure(title = "Dilution Plots", x_range = [f'{os_dict.get(i)}' for i in range(0,16)], sizing_mode = 'stretch_width')
 temp_plot = figure(title = "Temperature Plots", x_axis_label = 'Time (hrs)', y_axis_label = 'Temp (c)', sizing_mode = 'stretch_width')
-
+dil_time_plot = figure(title="Media vs time",x_axis_label = 'Time  (hrs)', y_axis_label = 'Media consumed (L)', sizing_mode = 'stretch_both')
 
 
 
@@ -74,17 +76,27 @@ for x in range(0,16):
     data = get_raw_df(file_path, name="dil")
     dil_times = data['dil'].tolist()[1:]
     dil_vols =[flow_calibration[x] * el for el in dil_times]
+    volume_progression = [sum(dil_vols[:i]) for i in range(0,len(dil_vols))]
+    print("Volume progression length", len(volume_progression))
+    print("Time length", len(data['Time'].tolist()[1:]))
+
+    dil_time_plot.line(data['Time'].tolist()[1:],volume_progression,line_width=1, color=colour_array[x],
+                 legend_label=f'mOsm = {os_dict.get(x)}')
     total_dil_vol = np.sum(np.array(dil_vols))
     all_vial_consumptions.append(total_dil_vol)
+
 
 
 #Plotting a barchart of the total media consumption:
 dil_plot.vbar(x=[f'{os_dict.get(i)}' for i in range(0,16)], top=all_vial_consumptions,width = 0.9)
 
+#Plotting horizontal line on the dil time plot for max volume:
+hline = Span(location=1800, dimension='width', line_color='green', line_width=3)
+dil_time_plot.add_layout(hline)
 
 
 # Outputting the bokeh plot:
-for p in [gr_plot,temp_plot]:
+for p in [gr_plot,temp_plot,dil_time_plot]:
     p.legend.location = "top_left"
     p.legend.click_policy = "hide"
 
@@ -94,6 +106,7 @@ output_file("Growth_Temp_Media_Plots.html")
 #plottin this as a series of tabs for each type of plot:
 tab1 = Panel(child=gr_plot, title="Growth Rates")
 tab2 = Panel(child = temp_plot, title = "Temperature")
-tab3 = Panel(child = dil_plot,title = "Media Consumption")
+tab3 = Panel(child = dil_plot,title = "Total Media Consumption")
+tab4 = Panel(child = dil_time_plot,title = 'Rate of media consumption')
 
-show(Tabs(tabs=[tab1, tab2, tab3]))
+show(Tabs(tabs=[tab1, tab2, tab3,tab4]))

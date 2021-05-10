@@ -3,6 +3,7 @@
 import numpy as np
 import logging
 import os.path
+import pandas as pd
 import time
 
 # logger setup
@@ -31,6 +32,11 @@ OPERATION_MODE = 'turbidostat' #use to choose between 'turbidostat' , 'chemostat
 # if using a different mode, name your function as the OPERATION_MODE variable
 
 ##### END OF USER DEFINED GENERAL SETTINGS #####
+def get_raw_df(filepath,name):
+    df = pd.read_csv(filepath)
+    cols = list(df.columns)
+    df = df.rename(columns={cols[0]: "Time", cols[1]: name})
+    return df
 
 def turbidostat(eVOLVER, input_data, vials, elapsed_time):
     OD_data = input_data['transformed']['od']
@@ -154,9 +160,16 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 data = np.genfromtxt(file_path, delimiter=',')
                 last_pump = data[len(data)-1][0]
 
+                #Getting total volumes of pumps:
+                pump_data = get_raw_df(file_path, name="dil")
+                dil_times = pump_data['dil'].tolist()[1:]
+                dil_vols = [flow_rate[x] * el for el in dil_times]
+                total_dil_vol = np.sum(np.array(dil_vols))
+                print("total dilution volume: ", total_dil_vol)
+
                 #If it's done 110 generations of pumping, don't pump.
 
-                if ((elapsed_time - last_pump)*60) >= pump_wait and len(data)-2 <= 110: # if sufficient time since last pump, send command to Arduino. Eric upped this from 60s.
+                if ((elapsed_time - last_pump)*60) >= pump_wait and total_dil_vol <= 1850: # if sufficient time since last pump, send command to Arduino. Eric upped this from 60s.
                     # print("Time since last pump = ", (elapsed_time-last_pump)*60, "triggering dilution" )
                     logger.info('turbidostat dilution for vial %d' % x)
                     # influx pump
