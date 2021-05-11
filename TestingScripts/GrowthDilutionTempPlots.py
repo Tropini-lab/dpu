@@ -75,7 +75,7 @@ for x in range(0,16):
     file_path = os.path.join(save_path, EXP_NAME, 'pump_log', file_name)
     data = get_raw_df(file_path, name="dil")
     dil_times = data['dil'].tolist()[1:]
-    dil_vols =[flow_calibration[x] * el for el in dil_times]
+    dil_vols =[flow_calibration[x] *1.07*  el for el in dil_times]
     volume_progression = [sum(dil_vols[:i]) for i in range(0,len(dil_vols))]
     print("Volume progression length", len(volume_progression))
     print("Time length", len(data['Time'].tolist()[1:]))

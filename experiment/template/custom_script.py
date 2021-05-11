@@ -163,7 +163,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 #Getting total volumes of pumps:
                 pump_data = get_raw_df(file_path, name="dil")
                 dil_times = pump_data['dil'].tolist()[1:]
-                dil_vols = [flow_rate[x] * el for el in dil_times]
+                dil_vols = [flow_rate[x]*1.07 * el for el in dil_times]
                 total_dil_vol = np.sum(np.array(dil_vols))
                 print("total dilution volume: ", total_dil_vol)
 
