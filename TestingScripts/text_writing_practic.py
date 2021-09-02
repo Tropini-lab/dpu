@@ -40,10 +40,13 @@ class Zeroing:
         return abs(od)
 
     def file_num(self,filename):
-
+        print("The filename is", filename)
         start_index = int(str.index(filename, "vial")+4)
         end_index = int(str.index(filename, "_od"))
-        filenumber = int(filename[start_index: end_index])
+        new_end_index = int(filename.find("_od", filename.find("_od")+1))
+        print("start", start_index, "end", new_end_index)
+        filenumber = int(filename[start_index: new_end_index])
+        print(filenumber)
         return filenumber
 
     def get_raw_df(self,filepath):
@@ -76,7 +79,7 @@ class Zeroing:
 
 
         #Getting the median of raw od readings over a window...
-
+        print("Vial number", vial_num)
         df_90 = self.get_raw_df(self.od_90_files[vial_num])
         od_90_baseline_median = np.median(df_90["OD"].tolist()[:window_size])
 
@@ -115,7 +118,7 @@ class Zeroing:
         plt.figure()
 
         # figure
-        # for i in [11,12,13,15]:
+        # for i in [6,9]:
         for i in range(0,16):
 
             factor,rw_df_135,rw_df_90 = self.raw_zeroing(60,vial_num = i)
@@ -211,8 +214,8 @@ if __name__ == '__main__':
     cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_90_raw'
-    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_135_raw'
+    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_90_raw'
+    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()

@@ -10,14 +10,17 @@ import os
 #     data = np.genfromtxt(file_path, delimiter=',')
 #     print(f'Vial {x}', " Amount of pumps ", len(data)-2)
 
-x =5
-EXP_NAME = 'April_28_Phage_Osmo_expt'
+x =3
+EXP_NAME = 'July_9_negative_cntrl_expt'
 save_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template'
-file_name = "vial{0}_pump_log.txt".format(x)
+file_name = f'vial{x}_pump_log.txt' # "vial{1}_pump_log.txt".format(x)
 file_path = os.path.join(save_path, EXP_NAME, 'pump_log', file_name)
 data = np.genfromtxt(file_path, delimiter=',')
 #Getting total volumes of pumps:
-dil_times = data[1]
-dil_vols = [.77 * el for el in dil_times]
-total_dil_vol = np.sum(np.array(dil_vols))
-print("total dilution volume: ", total_dil_vol)
+
+print(len(data))
+print("First few lines",data[1][0])
+
+last_pump = data[len(data) - 1][0]
+
+print("Last pump time:", last_pump)
