@@ -1,0 +1,6 @@
+2021-03-09 17:22:52 - eVOLVER - [INFO] - updating temperatures (max. deltaT is 0.70)
+2021-03-09 17:22:52 - eVOLVER - [INFO] - setting initial OD reading
+2021-03-09 17:22:52 - eVOLVER - [CRITICAL] - exception [Errno 2] No such file or directory: 'C:\\Users\\erlyall\\PycharmProjects\\dpu\\experiment\\template\\Mar_9_tst_expt\\od_90_raw\\vial0_od_90_raw.txt' stopped the experiment
+2021-03-09 17:22:52 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:22:52 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-03-09 17:22:52 - eVOLVER - [INFO] - stopping all pumps

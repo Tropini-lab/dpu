@@ -1,0 +1,38 @@
+2021-03-09 17:23:39 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-09 17:23:39 - eVOLVER - [INFO] - setting initial OD reading
+2021-03-09 17:23:58 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-09 17:24:18 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-09 17:24:38 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.12)
+2021-03-09 17:24:58 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-09 17:25:17 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-09 17:25:38 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-09 17:25:38 - custom_script - [INFO] - turbidostat dilution for vial 15
+2021-03-09 17:25:57 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-09 17:26:18 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-09 17:26:37 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-09 17:26:58 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.12)
+2021-03-09 17:27:18 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-09 17:27:29 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-03-09 17:27:29 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:27:32 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-03-09 17:27:32 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:27:32 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-03-09 17:27:32 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:30:18 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-09 17:30:19 - custom_script - [INFO] - turbidostat dilution for vial 15
+2021-03-09 17:30:38 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-09 17:30:50 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-03-09 17:30:50 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:32:10 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-03-09 17:32:10 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:32:10 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-03-09 17:32:10 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:33:38 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-09 17:33:38 - custom_script - [INFO] - turbidostat dilution for vial 15
+2021-03-09 17:33:58 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-09 17:34:02 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-03-09 17:34:02 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:34:28 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-03-09 17:34:28 - eVOLVER - [INFO] - stopping all pumps
+2021-03-09 17:34:29 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-03-09 17:34:29 - eVOLVER - [INFO] - stopping all pumps

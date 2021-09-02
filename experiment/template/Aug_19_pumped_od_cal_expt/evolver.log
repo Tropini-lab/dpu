@@ -1,0 +1,24 @@
+2021-08-19 18:09:35 - eVOLVER - [INFO] - updating temperatures (max. deltaT is 139272054789.44)
+2021-08-19 18:09:35 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:09:42 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:09:42 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:10:03 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:10:03 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:10:22 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:10:22 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:10:43 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:10:43 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:11:02 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:11:02 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:11:23 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:11:23 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:11:42 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:11:42 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:12:03 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:12:03 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:12:22 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 11.00)
+2021-08-19 18:12:22 - eVOLVER - [INFO] - user-defined operation mode od_calibration
+2021-08-19 18:12:22 - eVOLVER - [CRITICAL] - exception 'float' object is not subscriptable stopped the experiment
+2021-08-19 18:12:22 - eVOLVER - [INFO] - stopping all pumps
+2021-08-19 18:12:22 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-08-19 18:12:22 - eVOLVER - [INFO] - stopping all pumps

@@ -1,0 +1,36 @@
+2021-03-05 17:59:55 - eVOLVER - [INFO] - updating temperatures (max. deltaT is 0.62)
+2021-03-05 17:59:55 - eVOLVER - [INFO] - setting initial OD reading
+2021-03-05 18:00:15 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-05 18:00:35 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:00:54 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:01:15 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-05 18:01:34 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-05 18:01:54 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.12)
+2021-03-05 18:02:15 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:02:34 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-05 18:02:55 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:03:14 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-05 18:03:35 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-05 18:03:54 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-05 18:04:15 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:04:35 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:04:54 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-05 18:05:15 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:05:34 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-05 18:05:55 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.24)
+2021-03-05 18:06:14 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:06:35 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:06:54 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.12)
+2021-03-05 18:07:15 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:07:35 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.15)
+2021-03-05 18:07:54 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.21)
+2021-03-05 18:08:15 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:08:34 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:08:55 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.24)
+2021-03-05 18:09:14 - eVOLVER - [INFO] - actual temperature doesn't match configuration (yet? max deltaT is 71.18)
+2021-03-05 18:09:29 - eVOLVER - [WARNING] - interrupt received, pausing experiment
+2021-03-05 18:09:29 - eVOLVER - [INFO] - stopping all pumps
+2021-03-05 18:09:31 - eVOLVER - [WARNING] - second interrupt received, terminating experiment
+2021-03-05 18:09:31 - eVOLVER - [INFO] - stopping all pumps
+2021-03-05 18:09:31 - eVOLVER - [WARNING] - experiment stopped, goodbye!
+2021-03-05 18:09:31 - eVOLVER - [INFO] - stopping all pumps
