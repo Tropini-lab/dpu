@@ -437,7 +437,7 @@ def check_period(file_path, elapsed_time, pumping_period):
 def od_calibration(eVOLVER, input_data,vials, elapsed_time):
     vials = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
     pump_wait = 3  # wait 2.5 minutes between pumps
-    initial_od = 1.00
+    initial_od = 1.00 #This is the OD that all the vials are starting at
 
     target_ods = [.95,.9,.85,.8,.75,.7,.65,.6,.55,.5,.45,.4,.35,.3,.25,.2,.15,.1,.05]
 

@@ -42,8 +42,8 @@ class Zeroing:
     def file_num(self,filename):
         print("The filename is", filename)
         start_index = int(str.index(filename, "vial")+4)
-        end_index = int(str.index(filename, "_od"))
-        new_end_index = int(filename.find("_od", filename.find("_od")+1))
+        # end_index = int(str.index(filename, "_od"))
+        new_end_index = int(filename.find("_od", filename.find("_od")+1)) # if looking at calibration from august
         print("start", start_index, "end", new_end_index)
         filenumber = int(filename[start_index: new_end_index])
         print(filenumber)
@@ -101,19 +101,8 @@ class Zeroing:
         b3 = figure(title = "OD 135 degrees Raw", x_axis_label = 'Time (hours)', y_axis_label = 'OD')
         b4 = figure(title = "OD 90 degrees Raw", x_axis_label = 'Time (hours)', y_axis_label = 'OD')
 
-        # os_dict ={0:'230',1:'250',2:'300',3:'350 Turbidostat',5:'400',6:'450',8:'600',9:'700',11:'800',12:'900',13:'1200',15:'350'} # March 18th Trial
-
-        # os_dict = {0:'226',1:'400',2:'300', 3:'500', 5:'800' ,7:'226', 9:'226', 12:'500', 13:'300',15:'800' }  # March 19th Trial
 
         os_dict = {0:'220 +',1:'220 -',2:'220 +',3:'220 +',4:'',5:'455+',6:'455+',7:'Sterile',8:'455+',9:'455-',10:'',11:'925 +',12:'925 +',13:'925 +',14:'',15:'925 -'}
-
-
-        #os dict MAY HAVE BEEN WRONG MARCH 18 TRIAL: 11:900,12:1200, 113:350, 15:800 - SEEMS UNLIEKELY THOUGH?
-        export_df_rw_zero = pd.DataFrame()      #Create a dataframe to save the OD data in an excel file:
-        export_df_od_zero = pd.DataFrame()
-        export_df_od_135 = pd.DataFrame()
-        export_df_od_90 = pd.DataFrame()
-        export_df_time = pd.DataFrame()
 
         plt.figure()
 
@@ -143,14 +132,6 @@ class Zeroing:
             elif len(time)<len(od_zero_with_od):
                 od_zero_with_od = od_zero_with_od[:len(time)]
 
-            #Creating an export dataframe:
-            # export_df_rw_zero[f'OD  {os_dict.get(i)} mOsm vial {i} '] = od_zero_with_raw
-            # export_df_od_zero[f'OD  {os_dict.get(i)} mOsm vial {i}'] = od_zero_with_od
-            # export_df_od_135[f'OD 135 {os_dict.get(i)} mOsm vial {i}'] = rw_df_135["OD"].tolist()
-            # export_df_od_90[f'OD 90 {os_dict.get(i)} mOsm vial {i}'] = rw_df_90["OD"].tolist()
-
-
-
         #plot against time
             # b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=1),line_width=1, color=colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
             b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=7),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
@@ -158,18 +139,6 @@ class Zeroing:
             b4.line(rw_df_90["Time"], rw_df_90["OD"], color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
             plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=11), color = colour_array[i],label =f'Vial {i} + mOsm = {os_dict.get(i)} ')
-
-        # export_df_time['Time (hours)'] = time #Adding time to the dataframe
-
-        # with pd.ExcelWriter(r'C:\Users\erlyall\PycharmProjects\dpu\Mar18_M9_Osmolality_Testing_Data.xlsx') as writer:
-        #     export_df_rw_zero.to_excel(writer, sheet_name='OD Raw Zeroed')
-        #     export_df_od_zero.to_excel(writer, sheet_name='OD_Zeroed')
-        #     export_df_od_135.to_excel(writer,sheet_name='OD 135 Raw')
-        #     export_df_od_90.to_excel(writer,sheet_name='OD 90 Raw')
-        #     export_df_time.to_excel(writer, sheet_name= 'Time')
-
-
-
 
         #Adding a interactive legend:
         for b in [b2,b3,b4]:
@@ -181,9 +150,6 @@ class Zeroing:
         show(grid)
 
         #Saving the bokeh plot as a scalable graphics file:
-
-
-        # export_svg(grid, filename="March18_Osmo_Trials.svg")
 
         plt.legend()
         plt.title("Feb 5 Batch Trial")
@@ -209,13 +175,13 @@ class Zeroing:
 
 if __name__ == '__main__':
     # browser = webdriver.Chrome()
-    cal_dict_90 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
-    cal_dict_135 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
-    cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
+    cal_dict_90 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
+    cal_dict_135 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
+    cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_90_raw'
-    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_135_raw'
+    od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_90_raw'
+    od_135_folder =r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()

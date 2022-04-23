@@ -8,7 +8,6 @@ from bokeh.models import Panel, Tabs
 from bokeh.models import Span
 
 
-
 #Funciton that turns txt files into pandas dataframes.
 def get_raw_df(filepath,name):
     df = pd.read_csv(filepath)
@@ -17,15 +16,13 @@ def get_raw_df(filepath,name):
     return df
 
 
-
 #Getting the experiment names:
-EXP_NAME = 'July_9_negative_cntrl_expt'
-save_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template'
+EXP_NAME = 'April_28_Phage_Osmo_expt'
+save_path = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template'
 
 #Turning the pump calibration file into a numpy array?
-file_path = (r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\pump_cal.txt')
+file_path = (r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\pump_cal.txt')
 flow_calibration = np.loadtxt(file_path, delimiter="\t")[0]
-
 
 #Getting colours and legends:
 os_dict = {0: ' v0 220 +', 1: 'v1 220 -', 2: 'v2 220 +', 3: 'v3 220 +', 4: 'v4', 5: ' v5 455+', 6: 'v6 455+', 7: 'v7 Sterile', 8: 'v8 455+',
