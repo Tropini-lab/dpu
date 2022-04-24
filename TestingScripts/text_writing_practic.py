@@ -42,10 +42,10 @@ class Zeroing:
     def file_num(self,filename):
         print("The filename is", filename)
         start_index = int(str.index(filename, "vial")+4)
-        # end_index = int(str.index(filename, "_od"))
-        new_end_index = int(filename.find("_od", filename.find("_od")+1)) # if looking at calibration from august
-        print("start", start_index, "end", new_end_index)
-        filenumber = int(filename[start_index: new_end_index])
+        end_index = int(str.index(filename, "_od"))
+        # new_end_index = int(filename.find("_od", filename.find("_od")+1)) # if looking at calibration from august
+        print("start", start_index, "end", end_index)
+        filenumber = int(filename[start_index: end_index])
         print(filenumber)
         return filenumber
 
@@ -175,13 +175,14 @@ class Zeroing:
 
 if __name__ == '__main__':
     # browser = webdriver.Chrome()
-    cal_dict_90 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
-    cal_dict_135 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
-    cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
+    cal_dict_90 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
+    cal_dict_135 = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
+    cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy', allow_pickle='TRUE').item()
 
 
-    od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_90_raw'
-    od_135_folder =r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\T3_Aug_19_pumped_od_cal_expt\od_135_raw'
+
+    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_90_raw'
+    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()

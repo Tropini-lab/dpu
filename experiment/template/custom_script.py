@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 ##### USER DEFINED GENERAL SETTINGS #####
 
 #set new name for each experiment, otherwise files will be overwritten
-EXP_NAME = 'T3_Aug_19_pumped_od_cal_expt'
+EXP_NAME = 'Apr24_2022_tst_expt'
 EVOLVER_IP = '10.0.0.100'
 EVOLVER_PORT = 8081
 
@@ -28,7 +28,7 @@ STIR_INITIAL = [10] * 16 #try 8,10,12 etc; makes 16-value list
 
 VOLUME =  26 #mL, determined by vial cap straw length
 PUMP_CAL_FILE = 'pump_cal.txt' #tab delimited, mL/s with 16 influx pumps on first row, etc.
-OPERATION_MODE = 'od_calibration' #use to choose between 'turbidostat' , 'chemostat' and 'eric_chemostat' functions
+OPERATION_MODE = 'chemostat' #use to choose between 'turbidostat' , 'chemostat' and 'eric_chemostat' functions
 # if using a different mode, name your function as the OPERATION_MODE variable
 
 ##### END OF USER DEFINED GENERAL SETTINGS #####
@@ -241,7 +241,7 @@ def chemostat(eVOLVER, input_data, vials, elapsed_time):
 
     #Alternatively, use 16 value list to set different rates, use 0 for vials not being used
     #Only running vials 3,5,10,14
-    rate_config = [0.0,0.0,0.0,0.5,0.0,1.0,0.0,0.0,0.0,0.0,1.5,0.0,0.0,0.0,2.0,0.0]
+    rate_config = [0.0,0.0,0.0,0,0.0,0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0]
 
 
     ##### END OF USER DEFINED VARIABLES #####

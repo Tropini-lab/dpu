@@ -129,7 +129,7 @@ def create_fit(coefficients, fit_name, fit_type, time_fit, params):
 if __name__ == '__main__':
 
     EXP_NAME = 'T3_Aug_19_pumped_od_cal_expt'
-    save_path = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template'   #Need to change "eric1" if using a different computer
+    save_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template'   #Need to change "eric1" if using a different computer
 
     # Getting a list of the target optical densities, where 1 is the starting OD (before the first pump, and 0.05
     #is the finishing OD after the last pump.
