@@ -20,6 +20,12 @@ class Zeroing:
         self.od_135_files = self.create_od_file_list(od_135_folder)
 
     def create_od_file_list(self,od_folder):
+        """
+        This function takes all the files in a folder, and outputs a list in order of vial number rather than the current
+        alphabetical order (0,1,10,11..... )
+        :param od_folder: A folder containing optical density readings (either OD 135 raw or OD 90 raw)
+        :return: A list of files in that folder, in order of vial number from vial 0 to vial 15.
+        """
         #Takes in a od90 or od 135 folder, and returns all the file names in a list in order of vials.
         od_files_list = []
         for path, subdirs, files in os.walk(od_folder):
@@ -30,12 +36,24 @@ class Zeroing:
         return od_files_list # a list of filenames containing the raw od data, in order of the vials.
 
     def opt_minimize(self,x,cpar):
+        """
+        This function is used during raw zeroing to help find the raw OD 90, OD 135 values that correspond to a calculated OD of 0.
+        The scipy optimize.minimize funciton tries to minimize the output of this function by changing x.
+        :param x: An list containing [od135raw, od90raw] in that order.
+        :param cpar: A list of the 5 3d calibration parameters from a given vial in order from c0 to c5
+        :return: calculated optical density
+        """
         #where x =[od135,od90]
         c0, c1, c2, c3, c4, c5 = cpar
         od = self.three_dim(x,c0, c1, c2, c3, c4, c5)
         return abs(od)
 
     def file_num(self,filename):
+        """
+        Looks at the filename, and returns the vial number
+        :param filename: A filename for raw OD90 or OD135 data for a given file
+        :return: the vial number this came from (0 through 15)
+        """
         start_index = int(str.index(filename, "vial")+4)
         end_index = int(str.index(filename, "_od"))
         # new_end_index = int(filename.find("_od", filename.find("_od")+1)) # if looking at calibration from august
@@ -43,12 +61,28 @@ class Zeroing:
         return filenumber
 
     def get_raw_df(self,filepath):
+        """
+        Creates a pandas dataframe from a text file containing time and optical densites
+        :param filepath: The filepath to a raw OD 90 or raw OD 130 file for a given vial
+        :return: A pandas dataframe containing read times and raw optical densities.
+        """
         df= pd.read_csv(filepath)
         cols = list(df.columns)
         df = df.rename(columns = {cols[0]: "Time", cols[1]: "OD"})
         return df
 
     def three_dim(self,data, c0, c1, c2, c3, c4, c5):
+        """
+
+        :param data: array containing OD 135 data in the first position, and OD 90 data in the second position.
+        :param c0: constant from the 3D calibration for a given vial
+        :param c1: constant from the 3D calibration for a given vial
+        :param c2: constant from the 3D calibration for a given vial
+        :param c3: constant from the 3D calibration for a given vial
+        :param c4: constant from the 3D calibration for a given vial
+        :param c5: constant from the 3D calibration for a given vial
+        :return: The calculated optical density 600 value. Same kind of OD you would see on a spectrometer or plate reader.
+        """
         x = data[0]  # OD 135 data
         y = data[1]  # OD 90 data
         z = float(c0 + c1 * y + c2 * x + c3 * y ** 2 + c4 * x * y + c5 * x ** 2)
@@ -56,6 +90,8 @@ class Zeroing:
 
     def raw_zeroing(self,window_size, vial_num, rawdf90, rawdf135):
         """
+        Calculates what raw OD 135 & OD 90 values that correspond to an optical density of zero. Then, adjusts the
+        raw OD's by their respective zeroing factors, and calculates an optical density based off of this.
 
         :param window_size: Number of readings used when taking the median to find baseline values of OD 135, 90 when
         the culture has nothing growing in them. 20-30 should suffice.
@@ -91,7 +127,18 @@ class Zeroing:
         return od_zero_with_raw
 
     def od_zeroing(self,vial_num, df_135, df_90,window_size = 1):
+        """
 
+        Subtracts the baseline optical densities from the calculated optical densities.
+
+        :param vial_num: the vial number, integer from 0-15
+        :param df_135: a dataframe created by the getrawdf function that contains time, and raw OD 135 values
+        :param df_90: Same as df_135, must be the same length, contains raw OD 90 values instead
+        :param window_size: The number of baseline readings at the beggining that should be used to "zero"
+        future OD readings. Readings are taken every 20 seconds, (i.e window size of 3 takes the median over 60 seconds
+        and substracts this from all readings in the dataset.
+        :return: optical density with the baseline OD subtracted.
+        """
         #Getting the actual OD readings:
         c0, c1, c2, c3, c4, c5 = cal_3d_params.get(f'Vial{vial_num}')
         od = np.real([self.three_dim([float(x), float(y)], c0, c1, c2, c3, c4, c5) for x, y in
@@ -104,7 +151,15 @@ class Zeroing:
         return adj_od
 
     def plot_OD_Data(self):
+        """
+        Creates plots of optical density versus time. The "bokeh" plots will be launched on a web browser as an html
+         and have an interactive legend + zoom function.
+        There are 4 bokeh panels: zeroed with raw OD values, zeroed with calculated OD values, OD 135 raw, OD 90 raw.
 
+        The "matplotlib"  plot can be used if you need a picture for a presentation.
+        It's easier to edit.
+
+        """
         #Making an array of colours
         colour_array = ['black', 'rosybrown', 'maroon', 'salmon', 'peru', 'yellow', 'olive', 'lawngreen', 'forestgreen',
                         'aquamarine', 'cyan',
