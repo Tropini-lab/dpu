@@ -17,11 +17,11 @@ def get_raw_df(filepath,name):
 
 
 #Getting the experiment names:
-EXP_NAME = 'April_28_Phage_Osmo_expt'
-save_path = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template'
+EXP_NAME = 'Apr29_NP_tst_expt'
+save_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template'
 
 #Turning the pump calibration file into a numpy array?
-file_path = (r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\pump_cal.txt')
+file_path = (r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\pump_cal.txt')
 flow_calibration = np.loadtxt(file_path, delimiter="\t")[0]
 
 #Getting colours and legends:
@@ -72,7 +72,7 @@ for x in range(0,16):
     file_path = os.path.join(save_path, EXP_NAME, 'pump_log', file_name)
     data = get_raw_df(file_path, name="dil")
     dil_times = data['dil'].tolist()[1:]
-    dil_vols =[flow_calibration[x] *1.07 *  el for el in dil_times]
+    dil_vols =[flow_calibration[x] *1.0 *  el for el in dil_times]
     volume_progression = [sum(dil_vols[:i]) for i in range(0,len(dil_vols))]
     print("Volume progression length", len(volume_progression))
     print("Time length", len(data['Time'].tolist()[1:]))
@@ -88,8 +88,8 @@ for x in range(0,16):
 dil_plot.vbar(x=[f'{os_dict.get(i)}' for i in range(0,16)], top=all_vial_consumptions,width = 0.9)
 
 #Plotting horizontal line on the dil time plot for max volume:
-hline = Span(location=1800, dimension='width', line_color='green', line_width=3)
-dil_time_plot.add_layout(hline)
+# hline = Span(location=1800, dimension='width', line_color='green', line_width=3)
+# dil_time_plot.add_layout(hline)
 
 
 # Outputting the bokeh plot:

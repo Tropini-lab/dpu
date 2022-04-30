@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 ##### USER DEFINED GENERAL SETTINGS #####
 
 #set new name for each experiment, otherwise files will be overwritten
-EXP_NAME = 'Apr24_2022_tst_expt'   #THE NAME MUST CONTAIN "expt" IN IT!!!
+EXP_NAME = 'Apr29_NP_tst_expt'   #THE NAME MUST CONTAIN "expt" IN IT!!!
 EVOLVER_IP = '10.0.0.100'          #This is the IP address of the eVOLVER that was set up for us by UBC IT
 EVOLVER_PORT = 8081                #This shouldn't change to the best of my knowledge.
 
@@ -28,17 +28,18 @@ STIR_INITIAL = [10] * 16 #try 8,10,12 etc; makes 16-value list
 
 VOLUME =  26 #mL, determined by vial cap straw length
 PUMP_CAL_FILE = 'pump_cal.txt' #tab delimited, mL/s with 16 influx pumps on first row, etc.
-OPERATION_MODE = 'chemostat' #use to choose between 'turbidostat' and 'chemostat' functions
+OPERATION_MODE = 'turbidostat' #use to choose between 'turbidostat' and 'chemostat' functions
 # if using a different mode, name your function as the OPERATION_MODE variable
 
 ##### END OF USER DEFINED GENERAL SETTINGS #####
+#THERE ARE MORE SETTINGS IN THE FUNCTIONS:
 
 def turbidostat(eVOLVER, input_data, vials, elapsed_time):
     OD_data = input_data['transformed']['od']
 
     ##### USER-DEFINED TURBIDOSTAT VARIABLES:#####
 
-    turbidostat_vials = [1,2,8,9,15] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
+    turbidostat_vials = [0,1,2,3,5,13] #vials is all 16, can set to different range (ex. [0,1,2,3]) to only trigger tstat on those vials
     stop_after_n_curves = np.inf #set to np.inf to never stop, or integer value to stop diluting after certain number of growth curves
     OD_values_to_average = 9  # Number of values to calculate the OD average
 
@@ -46,8 +47,8 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
     # upper_thresh = [0.4] * len(vials) #to set all vials to the same value, creates 16-value list
 
     #Alternatively, use 16 value list to set different thresholds, use 9999 for vials not being used
-    lower_thresh = [99, 0.2, 99, 99, 99, 99, 99, 99, 99, 0.2, 99, 99, 99, 99, 99, 99]
-    upper_thresh = [99, 0.4, 99, 99, 99, 99, 99, 99, 99, 0.4, 99, 99, 99, 99, 99, 99]
+    lower_thresh = [99, 0.2, 0.2, 0.2, 99, 99, 99, 99, 99, 99, 99, 99, 99, 0.2, 99, 99]
+    upper_thresh = [99, 0.4, 0.4, 0.4, 99, 99, 99, 99, 99, 99, 99, 99, 99, 0.4, 99, 99]
 
     #Tunable settings for overflow protection, pump scheduling etc. Unlikely to change between expts
 
@@ -58,9 +59,11 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
     #Defining dictionaries for automatic pumping ( used for bacteria which produce biofilms, and may not trigger a turbidostat.
     # for vials 1,9,15, if the time since last pump is greater than this (hours), just pump automatically. Combats biofilms.
-    auto_pump_dict = {1: 1.95, 9: 1.7, 11: 2, 2: 24, 8: 24,15: 24}
+    allow_auto_pumps = False
+    auto_pump_dict = {0: 3.00, 5: 3.00}
     # the length of time, in seconds, that the evolver should pump for when triggered for these vials
-    auto_pump_times = {1: 23.68, 9: 24.00, 11: 22.90, 2: 5.00, 8: 5.00, 15: 5.00}
+    auto_pump_times = {0: 24.00, 5: 24.00}
+
 
     ##### END OF USER DEFINED VARIABLES #####
 
@@ -136,8 +139,9 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
 
 
             #if need to dilute to lower threshold, then calculate amount of time to pump
+
             auto_pump = False
-            if elapsed_time >72:
+            if allow_auto_pumps == True:
                 if elapsed_time - last_pump > auto_pump_dict.get(x):
                     auto_pump = True
                 else:
@@ -164,7 +168,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 dil_vols = [flow_rate[x]*1.07 * el for el in dil_times]
                 total_dil_vol = np.sum(np.array(dil_vols))
 
-                if ((elapsed_time - last_pump)*60) >= pump_wait and total_dil_vol <= 2400: # if sufficient time since last pump, send command to Arduino. Eric upped this from 60s.
+                if ((elapsed_time - last_pump)*60) >= pump_wait and total_dil_vol <= 150: # if sufficient time since last pump, send command to Arduino. Eric upped this from 60s.
                     # print("Time since last pump = ", (elapsed_time-last_pump)*60, "triggering dilution" )
                     logger.info('turbidostat dilution for vial %d' % x)
                     # influx pump

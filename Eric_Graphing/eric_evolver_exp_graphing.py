@@ -112,8 +112,8 @@ class Zeroing:
         res = minimize(self.opt_minimize,x0=np.array([53000,25250]),args = ([c0, c1, c2, c3, c4, c5]), bounds = bnds)
 
         #Getting the median of raw od readings over a window...
-        od_90_baseline_median = np.median(rawdf90["OD"][:window_size])
-        od_135_baseline_median = np.median(rawdf135["OD"][:window_size])
+        od_90_baseline_median = np.mean(rawdf90["OD"][:window_size])
+        od_135_baseline_median = np.mean(rawdf135["OD"][:window_size])
 
         factor = [float(res.x[0]-od_135_baseline_median),float(res.x[1]-od_90_baseline_median)]
         # Adding on the raw adjustment factor:
@@ -145,7 +145,7 @@ class Zeroing:
                       zip(df_135["OD"], df_90["OD"])])
 
         #Getting the average OD readings over the window range:
-        baseline_median = np.median(od[:window_size])
+        baseline_median = np.mean(od[:window_size])
         adj_factor = 0- baseline_median #Getting adjustment factor
         adj_od = od + adj_factor #adjusting the optical densities accordingly.
         return adj_od
@@ -165,7 +165,7 @@ class Zeroing:
                         'aquamarine', 'cyan',
                         'deepskyblue', 'grey', 'blue', 'violet', 'magenta']
         # Assigning a name based on vial numbers:
-        os_dict = {0: '220 +', 1: '220 -', 2: '220 +', 3: '220 +', 4: '', 5: '455+', 6: '455+', 7: 'Sterile', 8: '455+',
+        os_dict = {0: 'Nicola Control', 1: '220 -', 2: '220 +', 3: '220 +', 4: '', 5: '455+', 6: '455+', 7: 'Sterile', 8: '455+',
                    9: '455-', 10: '', 11: '925 +', 12: '925 +', 13: '925 +', 14: '', 15: '925 -'}
 
         #Initializing bokeh plot:
@@ -182,7 +182,7 @@ class Zeroing:
 
             #Making pandas datafames out of the raw OD 135, OD 90 readings:
             raw_df_90 = self.get_raw_df(self.od_90_files[i])
-            raw_df_135 = self.get_raw_df(self.od_90_files[i])
+            raw_df_135 = self.get_raw_df(self.od_135_files[i])
 
             #Making sure these are the same length. Sometimes the readings might come a bit offset from eachother
             #as they are saving from the eVOLVER
@@ -197,14 +197,14 @@ class Zeroing:
             time = raw_df_90["Time"]
 
             #Calculating optical densities by zeroing them with the initial (n=window size) optical densities:
-            od_zero_with_od = self.od_zeroing(i,raw_df_135,raw_df_90,window_size=5)
+            od_zero_with_od = self.od_zeroing(i,raw_df_135,raw_df_90,window_size=9)
 
             #Calculating optical densities by zeroing the underlying raw OD 90, OD 135 values:
-            od_zero_with_raw = self.raw_zeroing(window_size=60,vial_num = i,rawdf90= raw_df_90,rawdf135= raw_df_135)
+            od_zero_with_raw = self.raw_zeroing(window_size=8,vial_num = i,rawdf90= raw_df_90,rawdf135= raw_df_135)
 
             #Making 4 bokeh plots. Smoothing the OD's with a median filter.
             b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=5),line_width=1, color = colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=5),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=1),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
             b3.line(raw_df_135["Time"],raw_df_135["OD"],color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
             b4.line(raw_df_90["Time"], raw_df_90["OD"], color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
@@ -222,7 +222,7 @@ class Zeroing:
 
         #Annotating the matplotlib
         plt.legend()
-        plt.title("Feb 5 Batch Trial")
+        plt.title("April 27th 2022 calibration trial")
         plt.xlabel('Time (hours)')
         plt.ylabel('OD')
         plt.grid(True)
@@ -230,10 +230,10 @@ class Zeroing:
 
 if __name__ == '__main__':
 
-    cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy', allow_pickle='TRUE').item()
+    cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy', allow_pickle='TRUE').item()
 
-    od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_90_raw'
-    od_135_folder =r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_135_raw'
+    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr29_NP_tst_expt\od_90_raw'
+    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr29_NP_tst_expt\od_135_raw'
 
     OD_Data = Zeroing(cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     OD_Data.plot_OD_Data()

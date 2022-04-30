@@ -123,7 +123,7 @@ def run2Dcal(filepath):
 def file_num(filename):
 
     start_index = int(str.index(filename, "vial")+4)
-    end_index = int(str.index(filename, "_od"))
+    end_index = int(str.index(filename, "_OD"))
     filenumber = int(filename[start_index: end_index])
     return filenumber
 
@@ -293,22 +293,23 @@ def compare_endpt_data(vial_od_dict,endpt_ods):
     plt.bar(vialnames,diff)
     plt.draw()
 
-def plot_derivatives(vial_od_dict,time,color_legend, datestring):
+def plot_derivatives(od_folder,color_legend, datestring):
     #Plots a forward difference derivative.
     #Finding the timestep between data readigngs:
-    timestep = np.mean (np.diff(np.array(time)))
-    print("Timestep", timestep)
-    print("Total Length",  len(time))
 
     fig, ax = plt.subplots()
-    for i in range(0,len(vial_od_dict)):
-        vial_od = vial_od_dict.get(f'Vial{i}')
+    for i in range(0,len(od_folder)):
+        df = get_raw_df(od_folder[i])
+        timestep = np.mean(np.diff(np.array(df['Time'])))
+        vial_od = df['OD']
         h= 50
         od_diff = [central_difference(vial_od,a,h,timestep=timestep) for a in range(0,len(vial_od))]
-        od_diff = medfilt(od_diff,kernel_size=5)
+        od_diff = medfilt(od_diff,kernel_size=25)
+        print(f'Vial {i} Max Derivative', np.max(od_diff))
         timespace = [timestep*i for i in range(0,len(od_diff))]
-        ax.plot(timespace,od_diff,color = color_legend[i], label = f'Vial{i}')
-        ax.set_ylim((-1,1))
+        ax.plot(timespace,medfilt(od_diff,kernel_size=3),color = color_legend[i], label = f'Vial{i}')
+        # ax.set_ylim((-1,1))
+        ax.set_xlim((7.5,20))
 
     ax.set_title("First derivative plot" + datestring)
     ax.set_xlabel('Time')
@@ -350,17 +351,30 @@ def exp_curve_fit(vial_od,time, st_time,end_time,time_step):
     plt.show()
 
 
+def create_od_file_list(od_folder):
+    #Takes in a od90 or od 135 folder, and returns all the file names in a list in order of vials.
+    od_files_list = []
+    for path, subdirs, files in os.walk(od_folder):
+        for name in files:
+            x = os.path.join(path, name)
+            od_files_list.append(x)
+    od_files_list.sort(key=file_num)
+    return od_files_list # a list of filenames containing the raw od data, in order of the vials.
 
+def get_raw_df(filepath):
+    df= pd.read_csv(filepath)
+    cols = list(df.columns)
+    df = df.rename(columns = {cols[0]: "Time", cols[1]: "OD"})
+    return df
 if __name__ == '__main__':
 
+    #colours:
+    colour_array = ['black', 'rosybrown', 'maroon', 'salmon', 'peru', 'yellow', 'olive', 'lawngreen', 'forestgreen',
+                    'aquamarine', 'cyan',
+                    'deepskyblue', 'grey', 'blue', 'violet', 'magenta']
 
-    # plot_3D_data(od_90_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_90_raw',
-    #              od_135_folder=r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Mar_25_Phage_osmo_expt\od_135_raw', datestring='Mar5')
-    #
-    # # plot_3D_data(od_90_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_90_raw',
-    # #              od_135_folder=r'C:\Users\erlyall\Desktop\eVOLVER_CODE\Old Experimental Data\Feb_8_Batch_expt_zeroed\od_135_raw', datestring= 'Feb')
-
-    run2Dcal(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy')
-
+    #Getting a list of the vials:
+    od_files_list = create_od_file_list(r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr27_cal_tst_expt\OD')
+    plot_derivatives(od_files_list,colour_array,"Testing")
     plt.show()
 
