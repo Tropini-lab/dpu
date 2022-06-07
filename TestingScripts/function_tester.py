@@ -8,6 +8,8 @@ import json
 #Testing new token with a pycharm push
 
 #Testing transfer to tropini lab org on bash
+
+#Testing transfer to tropini lab org on pycharm
 x = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy',allow_pickle='TRUE').item()
 
 y = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy',allow_pickle='TRUE').item()
