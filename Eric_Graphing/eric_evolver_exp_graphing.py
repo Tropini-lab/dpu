@@ -11,7 +11,6 @@ from bokeh.layouts import gridplot
 from bokeh.io import export_svg
 from selenium import webdriver
 
-
 class Zeroing:
 
     def __init__(self, cal_3d_params, od_90_folder, od_135_folder):
@@ -112,8 +111,8 @@ class Zeroing:
         res = minimize(self.opt_minimize,x0=np.array([53000,25250]),args = ([c0, c1, c2, c3, c4, c5]), bounds = bnds)
 
         #Getting the median of raw od readings over a window...
-        od_90_baseline_median = np.mean(rawdf90["OD"][:window_size])
-        od_135_baseline_median = np.mean(rawdf135["OD"][:window_size])
+        od_90_baseline_median = np.median(rawdf90["OD"][:window_size])
+        od_135_baseline_median = np.median(rawdf135["OD"][:window_size])
 
         factor = [float(res.x[0]-od_135_baseline_median),float(res.x[1]-od_90_baseline_median)]
         # Adding on the raw adjustment factor:
@@ -126,7 +125,7 @@ class Zeroing:
 
         return od_zero_with_raw
 
-    def od_zeroing(self,vial_num, df_135, df_90,window_size = 1):
+    def od_zeroing(self,vial_num, df_135, df_90,window_size = 60):
         """
 
         Subtracts the baseline optical densities from the calculated optical densities.
@@ -139,13 +138,14 @@ class Zeroing:
         and substracts this from all readings in the dataset.
         :return: optical density with the baseline OD subtracted.
         """
+        i = vial_num
         #Getting the actual OD readings:
-        c0, c1, c2, c3, c4, c5 = cal_3d_params.get(f'Vial{vial_num}')
+        c0, c1, c2, c3, c4, c5 = cal_3d_params.get(f'Vial{i}')
         od = np.real([self.three_dim([float(x), float(y)], c0, c1, c2, c3, c4, c5) for x, y in
                       zip(df_135["OD"], df_90["OD"])])
 
         #Getting the average OD readings over the window range:
-        baseline_median = np.mean(od[:window_size])
+        baseline_median = np.median(od[:window_size])
         adj_factor = 0- baseline_median #Getting adjustment factor
         adj_od = od + adj_factor #adjusting the optical densities accordingly.
         return adj_od
@@ -161,11 +161,11 @@ class Zeroing:
 
         """
         #Making an array of colours
-        colour_array = ['black', 'rosybrown', 'maroon', 'salmon', 'peru', 'yellow', 'olive', 'lawngreen', 'forestgreen',
+        colour_array = ['black', 'rosybrown', 'maroon', 'salmon', 'peru', 'goldenrod', 'olive', 'lawngreen', 'forestgreen',
                         'aquamarine', 'cyan',
                         'deepskyblue', 'grey', 'blue', 'violet', 'magenta']
         # Assigning a name based on vial numbers:
-        os_dict = {0: 'Nicola Control', 1: '220 -', 2: '220 +', 3: '220 +', 4: '', 5: '455+', 6: '455+', 7: 'Sterile', 8: '455+',
+        os_dict = {0: '220 +', 1: '220 -', 2: '220 +', 3: '220 +', 4: '', 5: '455+', 6: '455+', 7: 'Sterile', 8: '455+',
                    9: '455-', 10: '', 11: '925 +', 12: '925 +', 13: '925 +', 14: '', 15: '925 -'}
 
         #Initializing bokeh plot:
@@ -175,7 +175,7 @@ class Zeroing:
         b4 = figure(title = "OD 90 degrees Raw", x_axis_label = 'Time (hours)', y_axis_label = 'OD')
 
         #Initializing matplotlib plot:
-        plt.figure()
+        fig, (ax1, ax2, ax3) = plt.subplots(nrows=3, sharex=True)
 
         #Looping through each of the vials & making plots for them!
         for i in range(0,16):
@@ -197,43 +197,74 @@ class Zeroing:
             time = raw_df_90["Time"]
 
             #Calculating optical densities by zeroing them with the initial (n=window size) optical densities:
-            od_zero_with_od = self.od_zeroing(i,raw_df_135,raw_df_90,window_size=9)
+            od_zero_with_od = self.od_zeroing(i,raw_df_135,raw_df_90,window_size=1)
 
             #Calculating optical densities by zeroing the underlying raw OD 90, OD 135 values:
-            od_zero_with_raw = self.raw_zeroing(window_size=8,vial_num = i,rawdf90= raw_df_90,rawdf135= raw_df_135)
+            od_zero_with_raw = self.raw_zeroing(window_size=100,vial_num = i,rawdf90= raw_df_90,rawdf135= raw_df_135)
 
             #Making 4 bokeh plots. Smoothing the OD's with a median filter.
             b1.line(time, medfilt(np.array(od_zero_with_raw),kernel_size=5),line_width=1, color = colour_array[i], legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
-            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=1),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
+            b2.line(time, medfilt(np.array(od_zero_with_od),kernel_size=5),line_width = 1, color = colour_array[i],legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
             b3.line(raw_df_135["Time"],raw_df_135["OD"],color = colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}' )
             b4.line(raw_df_90["Time"], raw_df_90["OD"], color=colour_array[i], line_width = 1, legend_label=f'mOsm = {os_dict.get(i)}' + f'Vial{i}')
 
-            plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=5), color = colour_array[i],label =f'Vial {i} + mOsm = {os_dict.get(i)} ')
+            # plt.plot(time, medfilt(np.array(od_zero_with_od),kernel_size=5), color = colour_array[i],label =f'Vial {i} + mOsm = {os_dict.get(i)} ')
+            cut_at = int(len(time)*.25)
+            m_time = time[:cut_at]
+            m_od = medfilt(np.array(od_zero_with_od[:cut_at]),kernel_size=5)
+            if i in [0, 2, 3]:
+                ax1.plot(m_time, m_od, color=colour_array[i], label=f'Vial {i}',linewidth = .5)
+                ax1.title.set_text("Low Osmolality")
+                ax1.legend()
+                ax1.set_ylim(0, .5)
+                ax1.grid(True)
+                ax1.set_ylabel("OD")
+
+            if i in [5, 6, 8]:
+                ax2.plot(m_time, m_od, color=colour_array[i], label=f'Vial {i}',linewidth = .5)
+                ax2.set_ylim(0, .5)
+                ax2.title.set_text("Medium Osmolality")
+                ax2.legend()
+                ax2.grid(True)
+                ax2.set_ylabel("OD")
+            if i in [11, 12, 13]:
+                ax3.plot(m_time, m_od, color=colour_array[i], label=f'Vial {i}',linewidth = .5)
+                ax3.title.set_text("High Osmolality")
+                ax3.legend()
+                ax3.set_ylim(0, .5)
+                ax3.grid(True)
+                ax3.set_ylabel("OD")
+
 
         #Adding a interactive legend for Bokeh plots:
-        for b in [b1,b2,b3,b4]:
+        for b in [b1, b2,b3,b4]:
             b.legend.location = "top_left"
             b.legend.click_policy = "hide"
 
         #Showing the Bokeh plot:
-        grid = gridplot([b1,b2, b3,b4], ncols=1, sizing_mode = 'stretch_width')
+        grid = gridplot([b1, b2, b3,b4], ncols=1, sizing_mode = 'stretch_width')
         output_file("od_plots.html")
         show(grid)
 
         #Annotating the matplotlib
-        plt.legend()
-        plt.title("April 27th 2022 calibration trial")
+        #plt.title("Full-scale eVOLVER trial")
         plt.xlabel('Time (hours)')
-        plt.ylabel('OD')
+        # plt.ylabel('OD')
         plt.grid(True)
         plt.show()
 
 if __name__ == '__main__':
 
-    cal_3d_params = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy', allow_pickle='TRUE').item()
+    # cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy', allow_pickle='TRUE').item()
+    #
+    # od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_90_raw'
+    # od_135_folder =r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_135_raw'
 
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr29_NP_tst_expt\od_90_raw'
-    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr29_NP_tst_expt\od_135_raw'
+    cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy',
+                            allow_pickle='TRUE').item()
+
+    od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_90_raw'
+    od_135_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_135_raw'
 
     OD_Data = Zeroing(cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     OD_Data.plot_OD_Data()

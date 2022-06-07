@@ -177,12 +177,11 @@ if __name__ == '__main__':
     # browser = webdriver.Chrome()
     cal_dict_90 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD90Cal.npy', allow_pickle=True).item()
     cal_dict_135 = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\EricOD135Cal.npy', allow_pickle=True).item()
-    cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy', allow_pickle='TRUE').item()
+    cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy', allow_pickle='TRUE').item()
 
 
-
-    od_90_folder = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_90_raw'
-    od_135_folder =r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_135_raw'
+    od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_90_raw'
+    od_135_folder =r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\April_28_Phage_Osmo_expt\od_135_raw'
 
     RawZero = Zeroing(cal_dict_90,cal_dict_135,cal_3d_params,od_90_folder=od_90_folder,od_135_folder=od_135_folder)
     RawZero.plot_raw_zeroing()

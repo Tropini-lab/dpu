@@ -28,7 +28,7 @@ flow_calibration = np.loadtxt(file_path, delimiter="\t")[0]
 os_dict = {0: ' v0 220 +', 1: 'v1 220 -', 2: 'v2 220 +', 3: 'v3 220 +', 4: 'v4', 5: ' v5 455+', 6: 'v6 455+', 7: 'v7 Sterile', 8: 'v8 455+',
            9: 'v9 455-', 10: 'v10', 11: 'v11 925 +', 12: 'v12 925 +', 13: 'v13 925 +', 14: 'v14', 15: 'v15 925 -'}
 
-colour_array = ['black', 'rosybrown', 'maroon', 'salmon', 'peru', 'yellow', 'olive', 'lawngreen', 'forestgreen',
+colour_array = ['black', 'rosybrown', 'maroon', 'salmon', 'peru', 'goldenrod', 'olive', 'lawngreen', 'forestgreen',
                         'aquamarine', 'cyan', 'deepskyblue', 'grey', 'blue', 'violet', 'magenta']
 
 #Initializing the bokeh plots:
@@ -46,6 +46,7 @@ dil_time_plot = figure(title="Media vs time",x_axis_label = 'Time  (hrs)', y_axi
 # Creating an arrayto save diliution volumes:
 all_vial_consumptions = []
 
+fig, (ax1, ax2,ax3) = plt.subplots(nrows=3, sharex=True)
 #Running a bokeh plot on all the vials:
 for x in range(0,16):
 
@@ -57,6 +58,36 @@ for x in range(0,16):
     gr = data['GR'].tolist()
     gr_plot.line(time, gr, line_width=1, color=colour_array[x],
             legend_label=f'mOsm = {os_dict.get(x)}')
+
+    if x in [0,2,3]:
+        ax1.plot(time,gr,color= colour_array[x], label = f'Vial {x}',linewidth = .8)
+        ax1.title.set_text("Low Osmolality")
+        ax1.legend()
+        ax1.set_ylabel("Growth Rate")
+        ax1.grid(True)
+        ax1.set_ylim(0,.8)
+
+    if x in [5,6,8]:
+        ax2.plot(time, gr, color=colour_array[x], label = f'Vial {x}',linewidth = .8 )
+        ax2.set_ylim(0,.8)
+        ax2.title.set_text("Medium Osmolality")
+        ax2.legend()
+        ax2.set_ylabel("Growth Rate")
+        ax2.grid(True)
+        ax2.set_ylim(0, .8)
+
+    if x in [11,12,13]:
+        ax3.plot(time, gr, color=colour_array[x],label = f'Vial {x}',linewidth = .8 )
+        ax3.title.set_text("High Osmolality")
+        ax3.legend()
+        ax3.set_ylabel("Growth Rate")
+        ax3.grid(True)
+        ax3.set_ylim(0, .8)
+
+    plt.xlabel('Time (hrs)')
+    # plt.ylabel('Growth Rate')
+
+
 
     #Plotting temperature data:
     file_name = "vial{0}_temp.txt".format(x)
@@ -107,3 +138,4 @@ tab3 = Panel(child = dil_plot,title = "Total Media Consumption")
 tab4 = Panel(child = dil_time_plot,title = 'Rate of media consumption')
 
 show(Tabs(tabs=[tab1, tab2, tab3,tab4]))
+plt.show()
