@@ -168,7 +168,7 @@ def turbidostat(eVOLVER, input_data, vials, elapsed_time):
                 dil_vols = [flow_rate[x]*1.07 * el for el in dil_times]
                 total_dil_vol = np.sum(np.array(dil_vols))
 
-                if ((elapsed_time - last_pump)*60) >= pump_wait and total_dil_vol <= 150: # if sufficient time since last pump, send command to Arduino. Eric upped this from 60s.
+                if ((elapsed_time - last_pump)*60) >= pump_wait and total_dil_vol <= 300: # if sufficient time since last pump, send command to Arduino. Eric upped this from 60s.
                     # print("Time since last pump = ", (elapsed_time-last_pump)*60, "triggering dilution" )
                     logger.info('turbidostat dilution for vial %d' % x)
                     # influx pump
