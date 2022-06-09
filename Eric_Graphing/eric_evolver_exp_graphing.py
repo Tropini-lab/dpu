@@ -9,7 +9,7 @@ import math
 from bokeh.plotting import figure, output_file, show
 from bokeh.layouts import gridplot
 from bokeh.io import export_svg
-from selenium import webdriver
+# from selenium import webdriver
 
 class Zeroing:
 

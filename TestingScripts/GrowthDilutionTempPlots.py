@@ -18,10 +18,10 @@ def get_raw_df(filepath,name):
 
 #Getting the experiment names:
 EXP_NAME = 'Apr29_NP_tst_expt'
-save_path = r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template'
+save_path = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template'
 
 #Turning the pump calibration file into a numpy array?
-file_path = (r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\pump_cal.txt')
+file_path = (r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\pump_cal.txt')
 flow_calibration = np.loadtxt(file_path, delimiter="\t")[0]
 
 #Getting colours and legends:
