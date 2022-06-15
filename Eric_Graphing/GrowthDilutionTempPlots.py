@@ -17,7 +17,7 @@ def get_raw_df(filepath,name):
 
 
 #Getting the experiment names:
-EXP_NAME = 'Apr29_NP_tst_expt'
+EXP_NAME = 'April_28_Phage_Osmo_expt'
 save_path = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template'
 
 #Turning the pump calibration file into a numpy array?
@@ -40,9 +40,6 @@ dil_plot = figure(title = "Dilution Plots", x_range = [f'{os_dict.get(i)}' for i
 temp_plot = figure(title = "Temperature Plots", x_axis_label = 'Time (hrs)', y_axis_label = 'Temp (c)', sizing_mode = 'stretch_width')
 dil_time_plot = figure(title="Media vs time",x_axis_label = 'Time  (hrs)', y_axis_label = 'Media consumed (L)', sizing_mode = 'stretch_both')
 
-
-
-
 # Creating an arrayto save diliution volumes:
 all_vial_consumptions = []
 
@@ -53,6 +50,7 @@ for x in range(0,16):
     #Plotting growth rate data:
     file_name = "vial{0}_gr.txt".format(x)
     file_path = os.path.join(save_path, EXP_NAME,'growthrate', file_name)
+    print("The filepath is", file_path)
     data = get_raw_df(file_path, name = "GR")
     time = data['Time'].tolist()
     gr = data['GR'].tolist()

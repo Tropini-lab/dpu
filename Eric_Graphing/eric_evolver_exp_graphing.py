@@ -255,11 +255,13 @@ class Zeroing:
 
 if __name__ == '__main__':
 
+    #New calibration as of April 24th, 2022. Vial 12 has a broken heater, and vial 7 had a poor calibration.
     # cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy', allow_pickle='TRUE').item()
     #
     # od_90_folder = r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_90_raw'
     # od_135_folder =r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\Apr24_2022_tst_expt\od_135_raw'
 
+    #Old calibration for experiments from Feb 4th, 2021 to April 24th, 2022.
     cal_3d_params = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy',
                             allow_pickle='TRUE').item()
 

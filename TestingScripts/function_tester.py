@@ -1,7 +1,4 @@
 import numpy as np
-import pandas as pd
-import os
-import scipy.stats as stats
 import json
 
 #Testing new token in the function tester.
@@ -12,16 +9,26 @@ import json
 #Testing transfer to tropini lab org on pycharm
 
 #Testing tropini lab commit from lab computer pycharm
-x = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy',allow_pickle='TRUE').item()
 
-y = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy',allow_pickle='TRUE').item()
+apr24_cal = np.load(r'C:\Users\eric1\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy',allow_pickle='TRUE').item()
+print(apr24_cal)
 
-c0, c1, c2, c3, c4, c5 = x.get(f'Vial{0}')
+new_cal = open(r'C:\Users\eric1\PycharmProjects\dpu\experiment\template\od_cal.json')
+new_cal_data = json.load(new_cal)
+print("Json file")
+print(new_cal_data.get('coefficients'))
 
-print(c0,c1,c2,c3,c4,c5)
 
-c00, c10, c20, c30, c40, c50 = y.get(f'Vial{0}')
-print(c00,c10,c20,c30,c40,c50)
+# x = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Feb43DCal.npy',allow_pickle='TRUE').item()
+#
+# y = np.load(r'C:\Users\erlyall\PycharmProjects\dpu\Eric_Graphing\Eric_Apr24_20223dcal.npy',allow_pickle='TRUE').item()
+#
+# c0, c1, c2, c3, c4, c5 = x.get(f'Vial{0}')
+#
+# print(c0,c1,c2,c3,c4,c5)
+#
+# c00, c10, c20, c30, c40, c50 = y.get(f'Vial{0}')
+# print(c00,c10,c20,c30,c40,c50)
 
 # new_cal = open(r'C:\Users\erlyall\PycharmProjects\dpu\experiment\template\od_cal.json')
 # new_cal_data = json.load(new_cal)
